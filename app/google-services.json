@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "810629466815",
+    "firebase_url": "https://nestfinder-ab9ff.firebaseio.com",
+    "project_id": "nestfinder-ab9ff",
+    "storage_bucket": "nestfinder-ab9ff.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:810629466815:android:c5191189bb08b8e0",
+        "android_client_info": {
+          "package_name": "com.alphabgammainc.nestfinder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "810629466815-npqol7u3p8j6khjujhde4gs0bv2iovr9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDsNam4b1258HIy-yzRfO3Zi7zcS5XHoY8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
