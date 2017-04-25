@@ -1,7 +1,11 @@
 package com.alphabgammainc.nestfinder;
 
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -13,6 +17,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    private AppBarLayout mAppBarLayout;
+    private String[] desc = {"FUCKING SHIT BAG", " KILL YOUR SELF", "TOXIC MOTHER FUCKER", "DICK SUCKING FUCKER",
+            "GOD KNOWS WHAT THE FUCK", "FUCKING SHIT", "SHIT FUCK AND THE OTHERS IS A CUNT FKING SHIT",
+            "MOTHER CUNT FUCKING DICK SUCKING BITCH TITS", "SUGGAR BABY", "MOTHER CHODE", "HELLO WORLD"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +30,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        mAppBarLayout = (AppBarLayout) findViewById(R.id.app_bar);
+        CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) mAppBarLayout.getLayoutParams();
+        AppBarLayout.Behavior behavior = new AppBarLayout.Behavior();
+        behavior.setDragCallback(new AppBarLayout.Behavior.DragCallback() {
+            @Override
+            public boolean canDrag(AppBarLayout appBarLayout) {
+                return false;
+            }
+        });
+        params.setBehavior(behavior);
+
+
+        RecyclerView recyclerView = (RecyclerView)findViewById(R.id.rview);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(new FrontPageAdapter(this,desc));
+
     }
 
 
