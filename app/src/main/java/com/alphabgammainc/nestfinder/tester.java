@@ -12,7 +12,7 @@ import android.widget.Button;
 
 import com.alphabgammainc.nestfinder.Classes.Locations;
 import com.alphabgammainc.nestfinder.FirebaseConnection.DataBaseConnectionPresenter;
-import com.alphabgammainc.nestfinder.Ulilities.FragmentCallback;
+import com.alphabgammainc.nestfinder.Utilities.FragmentCallback;
 import com.google.firebase.database.DatabaseReference;
 
 /**

@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.alphabgammainc.nestfinder.Classes.Locations;
 import com.alphabgammainc.nestfinder.R;
-import com.alphabgammainc.nestfinder.Ulilities.ImageManager;
+import com.alphabgammainc.nestfinder.Utilities.ImageManager;
 
 import java.util.ArrayList;
 
