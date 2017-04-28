@@ -1,20 +1,88 @@
-package com.alphabgammainc.nestfinder.Utilites;
+package com.alphabgammainc.nestfinder.Utilities;
 
+import android.app.Activity;
 import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.widget.ImageView;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
+
+import java.io.ByteArrayOutputStream;
 
 /**
- * Created by soutrikbarua on 2017-04-26.
+ * Created by davidhuang on 2017-04-26.
  */
 
-public class ImageUploader {
+public class ImageManager {
 
+
+    public static void uploadImage(String file,String key, final ImageCallBack callBack ){
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        final Bitmap bitMap = BitmapFactory.decodeFile(file, options);
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitMap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        byte[] bytes = stream.toByteArray();
+
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+
+
+        StorageReference storageRef = storage.getReferenceFromUrl("gs://nestfinder-ab9ff.appspot.com/Homes");
+        StorageReference ImageRef = storageRef.child(key);
+
+
+        UploadTask uploadTask = ImageRef.putBytes(bytes);
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                @SuppressWarnings("VisibleForTests") Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                callBack.ImageOnReady(downloadUrl);
+            }
+        });
+    }
+    public static void downloadImage(final Activity mActivity, final ImageView imageView, String key){
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReferenceFromUrl("gs://nestfinder-ab9ff.appspot.com/Homes/" +key);
+        storageRef.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task) {
+                try {
+                    Picasso.with(mActivity).load(task.getResult()).fit().into(imageView);
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(mActivity, "Failed to download image check Internet Connection", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
 
 
     public static String getPath(final Context context, final Uri uri) {

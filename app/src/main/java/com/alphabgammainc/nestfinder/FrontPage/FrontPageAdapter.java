@@ -8,24 +8,28 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alphabgammainc.nestfinder.Classes.Locations;
 import com.alphabgammainc.nestfinder.R;
+import com.alphabgammainc.nestfinder.Utilities.ImageManager;
+
+import java.util.ArrayList;
 
 /**
  * Created by davidhuang on 2017-04-25.
  */
 
 public class FrontPageAdapter  extends RecyclerView.Adapter<FrontPageAdapter.ViewHolder>  {
-    Activity activity;
-    String[] description;
+    private Activity mActivity;
+    private ArrayList<Locations> locationses;
 
     /**
      *
      * @param activity
-     * @param desc
+     * @param locationses
      */
-    public FrontPageAdapter(Activity activity, String[] desc){
-        this.activity = activity;
-        this.description =desc;
+    public FrontPageAdapter(Activity activity, ArrayList<Locations> locationses){
+        this.mActivity = activity;
+        this.locationses =locationses;
     }
 
     @Override
@@ -47,22 +51,26 @@ public class FrontPageAdapter  extends RecyclerView.Adapter<FrontPageAdapter.Vie
 
     @Override
     public void onBindViewHolder(FrontPageAdapter.ViewHolder holder, int position) {
-        holder.desc.setText(description[position]);
-        holder.image.setImageResource(R.drawable.messagerec);
+
+        ImageManager.downloadImage(mActivity,holder.image, locationses.get(position).getRentImage());
+        holder.address.setText(this.locationses.get(position).getAddress());
+        holder.price.setText(Double.toString((this.locationses.get(position).getPrice())));
 
     }
 
     @Override
     public int getItemCount() {
-        return description.length;
+        return locationses.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView desc;
+        TextView address;
+        TextView price;
         ImageView image;
         public ViewHolder(View itemView) {
             super(itemView);
-            desc = (TextView)itemView.findViewById(R.id.desc);
+            address = (TextView)itemView.findViewById(R.id.location);
+            price = (TextView)itemView.findViewById(R.id.price);
             image = (ImageView)itemView.findViewById(R.id.image);
         }
 

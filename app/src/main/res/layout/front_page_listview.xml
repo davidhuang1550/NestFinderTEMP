@@ -7,18 +7,13 @@
     tools:context="com.alphabgammainc.nestfinder.MapsActivity"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     android:background="@color/colorPrimaryDark"
-    tools:showIn="@layout/activity_maps">
-
+    tools:showIn="@layout/front_page">
 
 
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/one_sided_border_top"
-            android:scrollbars="none"
-            android:dividerHeight="0dp"
-            android:id="@+id/rview"
-            android:divider="@null" />
-
+            android:id="@+id/rview" />
 
 </android.support.v4.widget.NestedScrollView>
