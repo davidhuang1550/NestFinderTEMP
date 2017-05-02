@@ -1,5 +1,11 @@
 package com.alphabgammainc.nestfinder.FirebaseConnection;
 
+import android.app.Activity;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.support.design.widget.Snackbar;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -18,12 +24,17 @@ public class DataBaseConnectionPresenter {
     private DatabaseReference dbReference;
     private FirebaseAuth authentication;
     private FirebaseUser firebaseUser;
+    private ConnectivityManager connectivityManager;
     private static DataBaseConnectionPresenter dataBaseConnectionPresenter;
+    private Activity mActivity;
+    private NetworkInfo activeNetworkInfo;
 
-    private DataBaseConnectionPresenter(){
-        authentication= FirebaseAuth.getInstance(); // get instance of my firebase console
-        dbReference = FirebaseDatabase.getInstance().getReference(); // access to database
-        firebaseUser = authentication.getCurrentUser();
+
+    private DataBaseConnectionPresenter(Activity activity){
+        this.authentication= FirebaseAuth.getInstance(); // get instance of my firebase console
+        this.dbReference = FirebaseDatabase.getInstance().getReference(); // access to database
+        this.firebaseUser = authentication.getCurrentUser();
+        this.mActivity = activity;
     }
     public void setFirebaseUser(){
         firebaseUser = authentication.getCurrentUser();
@@ -34,18 +45,25 @@ public class DataBaseConnectionPresenter {
      * this is a singleton object essentially wrapping a singleton inside a singleton.
      * @return instance of this class
      */
-    public static synchronized  DataBaseConnectionPresenter getInstance(){
+    public static synchronized  DataBaseConnectionPresenter getInstance(Activity activity){
         if(dataBaseConnectionPresenter==null){
-            dataBaseConnectionPresenter = new DataBaseConnectionPresenter();
+            dataBaseConnectionPresenter = new DataBaseConnectionPresenter(activity);
         }
+
         return dataBaseConnectionPresenter;
     }
 
     public void setFirebaseUser(FirebaseUser fbu){
         firebaseUser = fbu;
     }
+    // make sure that everytime u call this you check if it returns null because there could be no internet connection
     public DatabaseReference getDbReference(){
-        return dbReference;
+        if(isNetworkAvailable()){
+            return dbReference;
+        }
+        Snackbar.make(mActivity.getCurrentFocus(), "No Internet Connection", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show();
+        return null;
     }
     public FirebaseAuth getFireBaseAuth(){
         return authentication;
@@ -60,5 +78,16 @@ public class DataBaseConnectionPresenter {
     public void freeuserData(){
         FirebaseAuth.getInstance().signOut();
     }
+
+    public boolean isNetworkAvailable() {
+        if(connectivityManager==null){
+            connectivityManager
+                    = (ConnectivityManager) mActivity.getSystemService(Context.CONNECTIVITY_SERVICE);
+        }
+        activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
 }
 

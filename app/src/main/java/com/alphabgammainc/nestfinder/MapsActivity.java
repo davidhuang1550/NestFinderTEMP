@@ -26,7 +26,6 @@ public class MapsActivity extends AppCompatActivity implements ImageCallBack{
 
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().add(R.id.content_frame,new FrontPage()).commit();
-
     }
 
     /*
@@ -65,12 +64,14 @@ public class MapsActivity extends AppCompatActivity implements ImageCallBack{
                 case 1:
                     String path = ImageManager.getPath(this, data.getData());
 
-                    DatabaseReference reference = DataBaseConnectionPresenter.getInstance().getDbReference()
-                            .child("temp").push();
+                    DatabaseReference databaseReference = DataBaseConnectionPresenter.getInstance(this).getDbReference();
 
-                    ImageManager.uploadImage(path,reference.getKey(), this);
-                    fragmentCallback.callback(reference.getKey());
+                    if(databaseReference != null) {
+                        DatabaseReference reference = databaseReference.child("temp").push();
 
+                        ImageManager.uploadImage(path, reference.getKey(), this);
+                        fragmentCallback.callback(reference.getKey());
+                    }
                     break;
             }
         }

@@ -71,7 +71,7 @@ public class tester extends Fragment implements FragmentCallback{
 
     @Override
     public void callback(String key) {
-        DatabaseReference reference = DataBaseConnectionPresenter.getInstance().getDbReference().child("Locations").push();
+        DatabaseReference reference = DataBaseConnectionPresenter.getInstance(mActivity).getDbReference().child("Locations").push();
         reference.setValue(new Locations(lon,lat,address[position],key,price[position]));
         lat -= 0.01;
         lon -= 0.01;
