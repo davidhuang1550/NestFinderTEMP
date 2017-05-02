@@ -22,4 +22,7 @@
     -->
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
         AIzaSyCb14xML7qnQ4AXGQ5ymUzgQwSmvcGa3IE</string>
+    <string name ="geocode" templateMergeStrategy="preserve" translatable="false">
+        https://maps.googleapis.com/maps/api/geocode/json?" +"address=
+    </string>
 </resources>
