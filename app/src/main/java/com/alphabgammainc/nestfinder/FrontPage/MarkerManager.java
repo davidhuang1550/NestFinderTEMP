@@ -9,6 +9,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -19,11 +20,11 @@ import java.util.ArrayList;
 
 public class MarkerManager {
     private Activity mActivity;
-    private LoadMap callback;
+    private ManageMap callback;
     private ArrayList<Locations> locations;
     private FrontPageAdapter adapter;
 
-    public MarkerManager(Activity activity, LoadMap callback, ArrayList<Locations> locations, FrontPageAdapter adapter){
+    public MarkerManager(Activity activity, ManageMap callback, ArrayList<Locations> locations, FrontPageAdapter adapter){
         this.mActivity = activity;
         this.callback = callback;
         this.locations = locations;
@@ -37,28 +38,31 @@ public class MarkerManager {
      */
     public void fetchMarkers(Double lat, Double lon){
 
+        DatabaseReference databaseReference = DataBaseConnectionPresenter.getInstance(mActivity).getDbReference();
 
-        DataBaseConnectionPresenter.getInstance().getDbReference().child("Locations").addListenerForSingleValueEvent(
-                new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
+        if(databaseReference != null) {
+        databaseReference.child("Locations").addListenerForSingleValueEvent(
+                    new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
 
 
-                        for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                            Locations locationObj = snapshot.getValue(Locations.class);
-                            locations.add(locationObj);
+                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                Locations locationObj = snapshot.getValue(Locations.class);
+                                locations.add(locationObj);
+                            }
                             adapter.notifyDataSetChanged();
 
+                            callback.LoadMap(locations);
                         }
-                        callback.LoadMap(locations);
-                    }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        System.out.print("Something went wrong");
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            System.out.print("Something went wrong");
+                        }
                     }
-                }
-        );
+            );
+        }
 
     }
 }

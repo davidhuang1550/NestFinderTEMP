@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.location.Location;
 import android.widget.ImageView;
 
-import com.alphabgammainc.nestfinder.FrontPage.LoadMap;
 import com.alphabgammainc.nestfinder.MapsActivity;
 import com.squareup.picasso.Picasso;
 
