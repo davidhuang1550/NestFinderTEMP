@@ -28,13 +28,15 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Observer;
 
 /**
  * Created by davidhuang on 2017-04-25.
  */
 
-public class FrontPage extends Fragment implements OnMapReadyCallback , LoadMap {
+public class FrontPage extends Fragment implements OnMapReadyCallback , ManageMap {
     private View mView;
     private Activity mActivity;
     private MapManager mapManager;
@@ -42,6 +44,7 @@ public class FrontPage extends Fragment implements OnMapReadyCallback , LoadMap 
     private RecyclerView listView;
     private ArrayList<Locations> locations;
     private FrontPageAdapter adapter;
+    private LinearLayoutManager layoutManager;
     private SwipeRefreshLayout swipeRefreshLayout;
     // Temporary until we actually start pulling data
     private AppBarLayout mAppBarLayout;
@@ -89,19 +92,21 @@ public class FrontPage extends Fragment implements OnMapReadyCallback , LoadMap 
         });
         params.setBehavior(behavior);
 
-       // swipeRefreshLayout = (SwipeRefreshLayout)mView.findViewById(R.id.swipe);
-        //swipeRefreshLayout.setRefreshing(true);
+        swipeRefreshLayout = (SwipeRefreshLayout)mView.findViewById(R.id.swipe);
+        swipeRefreshLayout.setRefreshing(true);
         //swipeRefreshLayout.setEnabled(false);
 
         locations = new ArrayList<>();
-        adapter = new FrontPageAdapter(mActivity, locations);
+
         listView = (RecyclerView)mView.findViewById(R.id.rview);
 
-        listView.setLayoutManager(new LinearLayoutManager(mActivity));
+        layoutManager =  new LinearLayoutManager(mActivity);
+
+        listView.setLayoutManager(layoutManager);
+
+        adapter = new FrontPageAdapter(mActivity, locations, this, listView);
 
         listView.setAdapter(adapter);
-
-
 
         return mView;
     }
@@ -111,7 +116,7 @@ public class FrontPage extends Fragment implements OnMapReadyCallback , LoadMap 
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        MarkerManager markerManager = new MarkerManager(mActivity , this, locations, adapter);
+        final MarkerManager markerManager = new MarkerManager(mActivity , this, locations, adapter);
 
       //  LatLng location = new LatLng(43.887501 , -79.428406);
         markerManager.fetchMarkers(43.887501 , -79.428406);
@@ -123,7 +128,12 @@ public class FrontPage extends Fragment implements OnMapReadyCallback , LoadMap 
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
-                System.out.println(marker);
+                Locations location = mapManager.getListMarker(marker);
+
+                // swap the two location objects in the array list so that it can be displayed at the top of the list
+                // when the user selects a marker.
+                Collections.swap(locations, 0, locations.indexOf(location));
+                adapter.notifyDataSetChanged();
 
                 return false;
             }
@@ -137,20 +147,29 @@ public class FrontPage extends Fragment implements OnMapReadyCallback , LoadMap 
      */
     @Override
     public void LoadMap(ArrayList<Locations> locations) {
+        swipeRefreshLayout.setEnabled(false);
         // Add a marker in Sydney and move the camera
         for(Locations location : locations){
             LatLng position = new LatLng(location.getLat(),location.getLon());
             Marker marker = mMap.addMarker(new MarkerOptions().position(position).title(location.getAddress()));
-            ListMarker listMarker = new ListMarker(location.getAddress());
-            mapManager.addMapMarker(marker, listMarker);
+            mapManager.addMapMarker(marker, location);
         }
 
-       /* FrontPageAdapter adapter = new FrontPageAdapter(mActivity, locations);
-        listView = (RecyclerView)mView.findViewById(R.id.rview);
 
-        listView.setLayoutManager(new LinearLayoutManager(mActivity));
-
-        listView.setAdapter(adapter);*/
     //    swipeRefreshLayout.setRefreshing(false);
+    }
+
+
+    /**
+     * we probably dont need this function but just leave it here for now.
+     * right now it is used for callback function for the adapter since we cann set a overall list listener
+     *
+     * @param location the key object that is used to search the map for the corresponding value.
+     */
+    @Override
+    public void setMarkerFocusCallback(Locations location) {
+        Marker marker = mapManager.getMapmarker(location);
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(marker.getPosition(),14));
+        marker.showInfoWindow();
     }
 }

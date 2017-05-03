@@ -1,5 +1,6 @@
 package com.alphabgammainc.nestfinder.FrontPage;
 
+import com.alphabgammainc.nestfinder.Classes.Locations;
 import com.google.android.gms.maps.model.Marker;
 
 import java.util.ArrayList;
@@ -11,8 +12,8 @@ import java.util.HashMap;
 
 public class MapManager {
 
-    HashMap<Marker, ListMarker> mapMarkers;
-    HashMap<ListMarker, Marker> listMarkers;
+    HashMap<Marker, Locations> mapMarkers;
+    HashMap<Locations, Marker> listMarkers;
 
 
     public MapManager(){
@@ -25,16 +26,16 @@ public class MapManager {
      * @param mapMarker google maps marker
      * @param listMarker listview item
      */
-    public synchronized void addMapMarker(Marker mapMarker, ListMarker listMarker){
+    public synchronized void addMapMarker(Marker mapMarker, Locations listMarker){
         mapMarkers.put(mapMarker,listMarker);
         listMarkers.put(listMarker,mapMarker);
     }
 
-    public synchronized ListMarker getListMarker(Marker marker){
+    public synchronized Locations getListMarker(Marker marker){
         return mapMarkers.get(marker);
     }
 
-    public Marker getMapmarker(ListMarker listMarker){
+    public synchronized Marker getMapmarker(Locations listMarker){
         return listMarkers.get(listMarker);
     }
 
