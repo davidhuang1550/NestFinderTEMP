@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +18,7 @@ import android.view.ViewGroup;
 import com.alphabgammainc.nestfinder.Classes.Locations;
 import com.alphabgammainc.nestfinder.MapsActivity;
 import com.alphabgammainc.nestfinder.R;
+import com.alphabgammainc.nestfinder.Utilities.FabManager.FabManager;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -46,6 +48,7 @@ public class FrontPage extends Fragment implements OnMapReadyCallback , ManageMa
     private FrontPageAdapter adapter;
     private LinearLayoutManager layoutManager;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private FabManager fabManager;
     // Temporary until we actually start pulling data
     private AppBarLayout mAppBarLayout;
 
@@ -81,6 +84,17 @@ public class FrontPage extends Fragment implements OnMapReadyCallback , ManageMa
         // inproper way atm because we can make the support bar not collaspe.
         ((MapsActivity)mActivity).getSupportActionBar().hide();
 
+        FloatingActionButton generalTooling = (FloatingActionButton) mView.findViewById(R.id.generalTool);
+        FloatingActionButton createListing = (FloatingActionButton)  mView.findViewById(R.id.createListing);
+        FloatingActionButton centerLocation = (FloatingActionButton) mView.findViewById(R.id.centerLocation);
+
+
+
+        fabManager = FabManager.getInstance(generalTooling,createListing,centerLocation); // calling get instance automically shows the fab
+        fabManager.setListeners();
+        fabManager._hideAllNonGeneralButtons();
+
+
         mAppBarLayout = (AppBarLayout) mView.findViewById(R.id.app_bar);
         CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) mAppBarLayout.getLayoutParams();
         AppBarLayout.Behavior behavior = new AppBarLayout.Behavior();
@@ -107,6 +121,8 @@ public class FrontPage extends Fragment implements OnMapReadyCallback , ManageMa
         adapter = new FrontPageAdapter(mActivity, locations, this, listView);
 
         listView.setAdapter(adapter);
+
+
 
         return mView;
     }
