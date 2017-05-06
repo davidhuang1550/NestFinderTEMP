@@ -5,24 +5,27 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 
 import com.alphabgammainc.nestfinder.FirebaseConnection.DataBaseConnectionPresenter;
 import com.alphabgammainc.nestfinder.FrontPage.FrontPage;
+import com.alphabgammainc.nestfinder.Utilities.FabManager.FabManager;
 import com.alphabgammainc.nestfinder.Utilities.FragmentCallback;
 import com.alphabgammainc.nestfinder.Utilities.ImageCallBack;
 import com.alphabgammainc.nestfinder.Utilities.ImageManager;
 import com.google.firebase.database.DatabaseReference;
 
+import java.util.ArrayList;
+
 public class MapsActivity extends AppCompatActivity implements ImageCallBack{
     private FragmentCallback fragmentCallback;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+
 
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().add(R.id.content_frame,new FrontPage()).commit();
