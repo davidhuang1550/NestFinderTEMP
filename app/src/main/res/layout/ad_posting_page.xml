@@ -3,17 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
+    android:clickable="true"
     android:orientation="vertical">
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="214dp"
-        android:layout_height="148dp"
-        app:srcCompat="@drawable/common_full_open_on_phone" />
 
     <GridLayout
         android:layout_width="match_parent"
-        android:layout_height="309dp">
+        android:layout_height="455dp">
 
         <TextView
             android:id="@+id/adTitle"
@@ -64,11 +60,58 @@
             android:text="What's the street name?" />
 
         <TextView
-            android:id="@+id/adpostalCode"
+            android:id="@+id/adcity"
             android:layout_width="72dp"
             android:layout_height="wrap_content"
             android:layout_column="0"
             android:layout_row="3"
+            android:text="City" />
+
+        <EditText
+            android:id="@+id/city"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="What city?" />
+
+        <TextView
+            android:id="@+id/adprovince"
+            android:layout_width="72dp"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_row="4"
+            android:text="Province" />
+
+        <EditText
+            android:id="@+id/province"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="What province?" />
+        <TextView
+            android:id="@+id/adcountry"
+            android:layout_width="72dp"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_row="5"
+            android:text="Country" />
+
+        <EditText
+            android:id="@+id/country"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="Which country?" />
+
+        <TextView
+            android:id="@+id/adpostalCode"
+            android:layout_width="72dp"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_row="6"
             android:text="Postal Code" />
 
         <EditText
@@ -84,7 +127,7 @@
             android:layout_width="72dp"
             android:layout_height="wrap_content"
             android:layout_column="0"
-            android:layout_row="4"
+            android:layout_row="7"
             android:text="Bed Rooms" />
 
         <EditText
@@ -100,7 +143,7 @@
             android:layout_width="72dp"
             android:layout_height="wrap_content"
             android:layout_column="0"
-            android:layout_row="5"
+            android:layout_row="8"
             android:text="BathRooms" />
 
         <EditText
@@ -117,7 +160,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_column="0"
-            android:layout_row="6"
+            android:layout_row="9"
             android:text="Furnished" />
 
         <CheckBox
@@ -125,7 +168,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_column="1"
-            android:layout_row="6"
+            android:layout_row="9"
             android:text="Pets" />
 
     </GridLayout>
@@ -137,7 +180,7 @@
         <Button
             android:id="@+id/postAd"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="100dp"
             android:text="Post Ad"
             android:layout_alignParentStart="true"
             android:layout_marginStart="135dp"
