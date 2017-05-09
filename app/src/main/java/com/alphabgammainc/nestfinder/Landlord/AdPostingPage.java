@@ -15,8 +15,10 @@ import android.widget.EditText;
 
 import com.alphabgammainc.nestfinder.Classes.Address;
 import com.alphabgammainc.nestfinder.FirebaseConnection.DataBaseConnectionPresenter;
+import com.alphabgammainc.nestfinder.GoogleService.LatLong;
 import com.alphabgammainc.nestfinder.R;
 
+import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
 
 /**
@@ -40,6 +42,7 @@ public class AdPostingPage extends Fragment{
     private EditText bathRooms;
     private CheckBox isFurnished;
     private CheckBox pets;
+    private EditText price;
     private Button postAd;
 
 
@@ -57,6 +60,7 @@ public class AdPostingPage extends Fragment{
     private int mbathRooms;
     private boolean misFurnished;
     private boolean mPets;
+    private Double mPrice;
     /**
      * All other variable for this fragment exists here
      */
@@ -64,22 +68,25 @@ public class AdPostingPage extends Fragment{
     private Activity mActivity;
     private Location adLocation;
     private Address mAddress;
+    private LatLong mLatLong;
+    private Double mLat;
+    private Double mLng;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mActivity =getActivity();
-
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-
         mView = inflater.inflate(R.layout.ad_posting_page,container,false);
+
         /**
          * Get the respective views
          */
+
         adTitle =(EditText)mView.findViewById(R.id.title);
         streetNumber=(EditText)mView.findViewById(R.id.streetNumber);
         streetName=(EditText)mView.findViewById(R.id.streetName);
@@ -91,7 +98,11 @@ public class AdPostingPage extends Fragment{
         bathRooms=(EditText)mView.findViewById(R.id.bathrooms);
         isFurnished=(CheckBox)mView.findViewById(R.id.furnished);
         pets=(CheckBox)mView.findViewById(R.id.pets);
+        price=(EditText)mView.findViewById(R.id.price);
 
+
+
+        postAd =(Button)mView.findViewById(R.id.postAd);
 
 
         // adLocation = new Location() instantiate the new location here
@@ -99,7 +110,6 @@ public class AdPostingPage extends Fragment{
         /**
          * Submit button;
          */
-        postAd =(Button)mView.findViewById(R.id.postAd);
 
         postAd.setOnClickListener(new View.OnClickListener() {
 
@@ -108,8 +118,8 @@ public class AdPostingPage extends Fragment{
             @Override
             public void onClick(View v) {
                 /**
-             * Convert the fetched data to be passed in the Locations object
-             */
+                 * Convert the fetched data to be passed in the Locations object
+                 */
                 madTitle= adTitle.getText().toString();
                 mstreetName=streetName.getText().toString();
                 mstreetNumber=streetNumber.getText().toString();
@@ -122,10 +132,13 @@ public class AdPostingPage extends Fragment{
                  * Additional information about the apartment
                  */
 
-                mbedRooms =Integer.parseInt(bedRooms.toString());
-                mbathRooms = Integer.parseInt(bathRooms.toString());
-                misFurnished=Boolean.valueOf(isFurnished.toString());
-                mPets =Boolean.valueOf(pets.toString());
+
+                mbedRooms =Integer.parseInt(bedRooms.getText().toString());
+                mbathRooms = Integer.parseInt(bathRooms.getText().toString());
+                misFurnished=Boolean.valueOf(isFurnished.getText().toString());
+                mPets =Boolean.valueOf(pets.getText().toString());
+                mPrice =Double.parseDouble(price.getText().toString());
+
 
                 /**
                  * send the data into an address object
@@ -133,10 +146,26 @@ public class AdPostingPage extends Fragment{
 
                 mAddress =new Address(mstreetNumber,mstreetName,mCity,mProvince,mpostalCode,mCountry);
 
+
+                mLatLong = new LatLong(mAddress);
+                mLatLong.createAddress();
+                try {
+                   mLatLong.execute();
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+
+                mLat = mLatLong.latitude();
+                mLng = mLatLong.longitude();
+
+                //Something goes wrong here
+               /* adLocation = new Location(mLng,mLat,madTitle,mAddress,mbedRooms,mbathRooms,
+                        misFurnished,mPets,mPrice);
+                 */
+
                 post_ad_to_database();
             }
         });
-
 
         return mView;
     }

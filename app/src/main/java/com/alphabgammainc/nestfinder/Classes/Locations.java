@@ -12,15 +12,15 @@ import com.squareup.picasso.Picasso;
  */
 
 public class Locations {
-    private double lon;
-    private double lat;
+    private Double lon;
+    private Double lat;
     private String adTitle;
     private int bedRooms;
     private int bathRooms;
     private boolean isFurnished;
     private boolean pets;
     private String rentImage;
-    private double price;
+    private Double price;
     private String address;
     private Address mAddress;
 
@@ -28,12 +28,13 @@ public class Locations {
 
     }
 
-    public Locations(double lon, double lat,String adTitle,Address mAddress,
-                     int bedRooms,int bathRooms, boolean isFurnished,boolean pets,int price){
+    public Locations(Double lon, Double lat,String adTitle,Address mAddress,
+                     int bedRooms,int bathRooms, boolean isFurnished,boolean pets,Double price){
         this.lon = lon;
         this.lat = lat;
         this.adTitle = adTitle;
         this.mAddress=mAddress;
+        this.bedRooms=bedRooms;
         this.bathRooms =bathRooms;
         this.isFurnished =isFurnished;
         this.pets =pets;
@@ -44,19 +45,19 @@ public class Locations {
 
     }
 
-    public double getLon() {
+    public Double getLon() {
         return lon;
     }
 
-    public void setLon(double lon) {
+    public void setLon(Double lon) {
         this.lon = lon;
     }
 
-    public double getLat() {
+    public Double getLat() {
         return lat;
     }
 
-    public void setLat(double lat) {
+    public void setLat(Double lat) {
         this.lat = lat;
     }
 
@@ -76,11 +77,11 @@ public class Locations {
         this.mAddress = mAddress;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
