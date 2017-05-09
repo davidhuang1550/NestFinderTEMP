@@ -9,7 +9,7 @@
 
     <GridLayout
         android:layout_width="match_parent"
-        android:layout_height="455dp">
+        android:layout_height="469dp">
 
         <TextView
             android:id="@+id/adTitle"
@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="Add a title here!" />
+            android:hint="Add a title here!" />
 
         <TextView
             android:id="@+id/adstreetNumber"
@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="What's the street number?" />
+            android:hint="What's the street number?" />
 
         <TextView
             android:id="@+id/adstreetName"
@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="What's the street name?" />
+            android:hint="What's the street name?" />
 
         <TextView
             android:id="@+id/adcity"
@@ -73,7 +73,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="What city?" />
+            android:hint="What city?" />
 
         <TextView
             android:id="@+id/adprovince"
@@ -89,7 +89,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="What province?" />
+            android:hint="What province?" />
         <TextView
             android:id="@+id/adcountry"
             android:layout_width="72dp"
@@ -104,7 +104,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="Which country?" />
+            android:hint="Which country?" />
 
         <TextView
             android:id="@+id/adpostalCode"
@@ -120,7 +120,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="What's the postal code?" />
+            android:hint="What's the postal code?" />
 
         <TextView
             android:id="@+id/adBedrooms"
@@ -136,7 +136,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="How many bedrooms?" />
+            android:hint="How many bedrooms?" />
 
         <TextView
             android:id="@+id/adBathrooms"
@@ -152,7 +152,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="How many bathrooms?" />
+            android:hint="How many bathrooms?" />
 
 
         <CheckBox
@@ -167,10 +167,19 @@
             android:id="@+id/pets"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_column="1"
+            android:layout_column="2"
             android:layout_row="9"
             android:text="Pets" />
 
+        <EditText
+            android:id="@+id/price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:layout_column="1"
+            android:layout_row="9"
+            android:inputType="textPersonName"
+            android:hint="Price?" />
     </GridLayout>
 
     <RelativeLayout

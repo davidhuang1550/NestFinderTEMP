@@ -1,9 +1,12 @@
 package com.alphabgammainc.nestfinder.Utilities.FabManager;
 
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.support.design.widget.FloatingActionButton;
 import android.view.View;
 
+import com.alphabgammainc.nestfinder.FrontPage.FrontPage;
+import com.alphabgammainc.nestfinder.Landlord.AdPostingPage;
 import com.alphabgammainc.nestfinder.R;
 
 import java.util.ArrayList;
@@ -17,14 +20,17 @@ public class FabManager implements View.OnClickListener {
     private FloatingActionButton createListing;
     private FloatingActionButton centerLocation;
     private static FabManager fabManager;
+    private Activity mActivity;
 
     private FabManager(
                        FloatingActionButton generalTooling,
                        FloatingActionButton createListing,
-                       FloatingActionButton centerLocation){
+                       FloatingActionButton centerLocation,
+                       Activity mActivity){
         this.generalTooling = generalTooling;
         this.createListing = createListing;
         this.centerLocation = centerLocation;
+        this.mActivity=mActivity;
 
     }
 
@@ -40,9 +46,10 @@ public class FabManager implements View.OnClickListener {
     public static synchronized FabManager getInstance(
                                                       FloatingActionButton generalTooling,
                                                       FloatingActionButton createListing,
-                                                      FloatingActionButton centerLocation){
+                                                      FloatingActionButton centerLocation,
+                                                      Activity mActivity){
         if(fabManager == null) {
-            fabManager = new FabManager(generalTooling,createListing,centerLocation);
+            fabManager = new FabManager(generalTooling,createListing,centerLocation,mActivity);
         }
         return fabManager;
     }
@@ -70,7 +77,8 @@ public class FabManager implements View.OnClickListener {
                 break;
             case R.id.createListing:
                 //set up a fragment kind of thing here so we can change the view also make sure to close all the fab buttons
-
+                FragmentManager fragmentManager = mActivity.getFragmentManager();
+                fragmentManager.beginTransaction().add(R.id.content_frame,new AdPostingPage()).commit();
                 // addpostingFragment.
                 break;
             case R.id.centerLocation:
