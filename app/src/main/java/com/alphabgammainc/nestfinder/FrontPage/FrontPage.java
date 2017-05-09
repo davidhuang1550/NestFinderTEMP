@@ -90,7 +90,7 @@ public class FrontPage extends Fragment implements OnMapReadyCallback , ManageMa
 
 
 
-        fabManager = FabManager.getInstance(generalTooling,createListing,centerLocation); // calling get instance automically shows the fab
+        fabManager = FabManager.getInstance(generalTooling,createListing,centerLocation,mActivity); // calling get instance automically shows the fab
         fabManager.setListeners();
         fabManager._hideAllNonGeneralButtons();
 
