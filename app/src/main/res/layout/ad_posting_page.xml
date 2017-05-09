@@ -167,23 +167,17 @@
             android:id="@+id/pets"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_column="1"
+            android:layout_column="2"
             android:layout_row="9"
             android:text="Pets" />
-
-        <TextView
-            android:id="@+id/adPrice"
-            android:layout_width="72dp"
-            android:layout_height="wrap_content"
-            android:layout_column="0"
-            android:layout_row="10"
-            android:text="Price" />
 
         <EditText
             android:id="@+id/price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:layout_column="1"
+            android:layout_row="9"
             android:inputType="textPersonName"
             android:hint="Price?" />
     </GridLayout>
