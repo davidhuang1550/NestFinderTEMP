@@ -31,18 +31,19 @@ public class AdPostingPage extends Fragment{
     /**
      * All the form variable exists here
      */
-    private EditText adTitle;
-    private EditText streetNumber;
-    private EditText streetName;
-    private EditText postalCode;
-    private EditText city;
-    private EditText country;
-    private EditText province;
+    private EditText adTitle; // p 1
+    private EditText streetNumber; // p2
+    private EditText streetName; // p2
+    private EditText postalCode; // p2
+    private EditText city; // p3
+    private EditText country; //p3
+    private EditText province; //p3
     private EditText bedRooms;
     private EditText bathRooms;
+    private EditText adDescription; // p1
     private CheckBox isFurnished;
     private CheckBox pets;
-    private EditText price;
+    private EditText price; //p1
     private Button postAd;
 
 

@@ -78,6 +78,7 @@ public class FabManager implements View.OnClickListener {
             case R.id.createListing:
                 //set up a fragment kind of thing here so we can change the view also make sure to close all the fab buttons
                 FragmentManager fragmentManager = mActivity.getFragmentManager();
+                //FrgmentActivity does not work here.
                 fragmentManager.beginTransaction().add(R.id.content_frame,new AdPostingPage()).commit();
                 // addpostingFragment.
                 break;
