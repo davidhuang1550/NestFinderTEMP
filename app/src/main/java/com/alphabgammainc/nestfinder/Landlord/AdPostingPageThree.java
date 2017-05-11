@@ -1,7 +1,7 @@
 package com.alphabgammainc.nestfinder.Landlord;
 
 import android.app.Activity;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.alphabgammainc.nestfinder.Classes.Address;
 import com.alphabgammainc.nestfinder.R;
 
 import java.util.ArrayList;
@@ -126,9 +127,9 @@ public class AdPostingPageThree extends Fragment implements View.OnClickListener
 
         adCountry.setAdapter(countryAdapter);
 
-        adCountry.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        adCountry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(position == 0){
                     ArrayAdapter<String> emptyAdapter = new ArrayAdapter<String>(mActivity, android.R.layout.simple_spinner_dropdown_item, new ArrayList<String>());
                     adProvinceState.setAdapter(emptyAdapter);
@@ -141,6 +142,11 @@ public class AdPostingPageThree extends Fragment implements View.OnClickListener
                     adProvinceState.setAdapter(provinceAdapter);
                 }
             }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
         });
 
         adCity = (EditText)mView.findViewById(R.id.adCity);
@@ -148,7 +154,7 @@ public class AdPostingPageThree extends Fragment implements View.OnClickListener
         mView.findViewById(R.id.nextpage).setOnClickListener(this);
 
 
-        return super.onCreateView(inflater, container, savedInstanceState);
+        return mView;
     }
 
     @Override
@@ -160,6 +166,8 @@ public class AdPostingPageThree extends Fragment implements View.OnClickListener
             if(AdPostingValidation.checkForEmptyString(adPostingCityString) && pos != 0) {
                 // validate, store info then call back.
                 // create some error feedback
+                //Address address = ((AdPostingManager)mActivity).getAddress();
+               // address.setCity();
             }
         }
     }

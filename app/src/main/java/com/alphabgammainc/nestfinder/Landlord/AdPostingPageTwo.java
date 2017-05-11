@@ -1,18 +1,26 @@
 package com.alphabgammainc.nestfinder.Landlord;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import com.alphabgammainc.nestfinder.Classes.Address;
+import com.alphabgammainc.nestfinder.Classes.Locations;
 import com.alphabgammainc.nestfinder.R;
 
 /**
  * Created by davidhuang on 2017-05-09.
+ *
+ * ---------------> READ THIS <------------------------------
+ *  we must change some components in page 2 becuase postal code only applies to canada and not the states
+ *  so consider change it to zipcode/postalcode or have it dynamically change in the view
+ *  not sure yet will decide this weekend. also the fourth fragment will probably consist of the image upload.
+ *
  */
 
 public class AdPostingPageTwo  extends Fragment implements View.OnClickListener, Pages{
@@ -53,6 +61,13 @@ public class AdPostingPageTwo  extends Fragment implements View.OnClickListener,
                     AdPostingValidation.validatePostalCode(adPostalCodeString)){
                 // validate, store info then call back.
                 // create some error feedback
+
+               // Locations location = ((AdPostingManager)mActivity).getlocation();
+                Address address =((AdPostingManager)mActivity).getAddress();
+                address.setStreetName(adAddressString);
+                address.setPostalCode(adPostalCodeString);
+                ((AdPostingManager)mActivity).setAddress(address);
+                ((AdPostingManager)mActivity).nextView(2);
 
             }
         }

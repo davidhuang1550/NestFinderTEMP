@@ -2,11 +2,14 @@ package com.alphabgammainc.nestfinder.Utilities.FabManager;
 
 import android.app.Activity;
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.view.View;
 
 import com.alphabgammainc.nestfinder.FrontPage.FrontPage;
+import com.alphabgammainc.nestfinder.Landlord.AdPostingManager;
 import com.alphabgammainc.nestfinder.Landlord.AdPostingPage;
+import com.alphabgammainc.nestfinder.MapsActivity;
 import com.alphabgammainc.nestfinder.R;
 
 import java.util.ArrayList;
@@ -77,10 +80,12 @@ public class FabManager implements View.OnClickListener {
                 break;
             case R.id.createListing:
                 //set up a fragment kind of thing here so we can change the view also make sure to close all the fab buttons
-                FragmentManager fragmentManager = mActivity.getFragmentManager();
+             //   FragmentManager fragmentManager = mActivity.getFragmentManager();
                 //FrgmentActivity does not work here.
-                fragmentManager.beginTransaction().add(R.id.content_frame,new AdPostingPage()).commit();
+               // fragmentManager.beginTransaction().add(R.id.content_frame,new AdPostingPage()).commit();
                 // addpostingFragment.
+                Intent myIntent = new Intent(mActivity, AdPostingManager.class);
+                mActivity.startActivity(myIntent);
                 break;
             case R.id.centerLocation:
                 // same thing here

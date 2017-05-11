@@ -1,10 +1,13 @@
 package com.alphabgammainc.nestfinder.Landlord;
 
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 
+import com.alphabgammainc.nestfinder.Classes.Address;
 import com.alphabgammainc.nestfinder.Classes.Locations;
 import com.alphabgammainc.nestfinder.R;
 
@@ -17,14 +20,14 @@ import java.util.ArrayList;
 public class AdPostingManager extends FragmentActivity {
 
     private Locations location;
-    private int position = 0;
+    private Address address;
 
-    private AdPostingPageOne adPostingPageOne;
-    private AdPostingPageTwo adPostingPageTwo;
-    private AdPostingPageThree adPostingPageThree;
+    private AdPostingPageOne adPostingPageOne = new AdPostingPageOne();
+    private AdPostingPageTwo adPostingPageTwo = new AdPostingPageTwo();
+    private AdPostingPageThree adPostingPageThree = new AdPostingPageThree();
 
 
-    private ArrayList<Pages> pages;
+    private ArrayList<Pages> pages = new ArrayList<>();
 
 
     @Override
@@ -34,14 +37,18 @@ public class AdPostingManager extends FragmentActivity {
 
 
         // register the pages
+
         pages.add(adPostingPageOne);
         pages.add(adPostingPageTwo);
         pages.add(adPostingPageThree);
 
         location = new Locations();
+        address = new Address();
 
-        FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().add(R.id.content_frame, new AdPostingPageOne());
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+
+        ft.setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit);
+        ft.add(R.id.content_frame, (android.support.v4.app.Fragment) pages.get(0),"fragment").commit();
     }
 
     /**
@@ -52,11 +59,24 @@ public class AdPostingManager extends FragmentActivity {
         return location;
     }
 
+    public Address getAddress(){return address;}
+
+    public void setLocation(Locations location){
+        this.location = location;
+    }
+
+    public void setAddress(Address address){
+        this.address = address;
+    }
+
     /**
      * change view
      */
-    public void nextView(){
+    public void nextView(int position){
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 
+        ft.setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit);
+        ft.replace(R.id.content_frame, (android.support.v4.app.Fragment) pages.get(position),"fragment").commit();
     }
 
 }

@@ -8,15 +8,15 @@ public class AdPostingValidation {
 
 
     public static boolean checkForEmptyString(String value) {
-        if( value.trim().equals("")) {
+        if(!value.trim().equals("")) {
             return true;
         }
         return false;
     }
 
     public static boolean validatePostalCode(String postalCode){
-
-        return false;
+        // for now just return true until we figure out a valid way to check postal.
+        return true;
     }
 
 
