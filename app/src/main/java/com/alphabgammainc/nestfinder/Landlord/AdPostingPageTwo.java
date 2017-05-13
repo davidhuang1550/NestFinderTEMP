@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.alphabgammainc.nestfinder.Classes.Address;
-import com.alphabgammainc.nestfinder.Classes.Locations;
 import com.alphabgammainc.nestfinder.R;
 
 /**
