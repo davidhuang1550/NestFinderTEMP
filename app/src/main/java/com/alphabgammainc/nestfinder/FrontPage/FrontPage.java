@@ -2,7 +2,6 @@ package com.alphabgammainc.nestfinder.FrontPage;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.location.Location;
 import android.support.annotation.Nullable;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -26,13 +25,12 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.Observer;
 
 /**
  * Created by davidhuang on 2017-04-25.
@@ -69,6 +67,7 @@ public class FrontPage extends Fragment implements OnMapReadyCallback , ManageMa
         mView = inflater.inflate(R.layout.front_page, container, false);
 
         MapView mMapView = (MapView) mView.findViewById(R.id.map);
+
         mMapView.onCreate(savedInstanceState);
 
         mMapView.onResume(); // needed to get the map to display immediately
@@ -133,6 +132,10 @@ public class FrontPage extends Fragment implements OnMapReadyCallback , ManageMa
         mMap = googleMap;
 
         final MarkerManager markerManager = new MarkerManager(mActivity , this, locations, adapter);
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            MapStyleOptions style =MapStyleOptions.loadRawResourceStyle(this.getContext(),R.raw.mapstyle);
+            mMap.setMapStyle(style);
+        }
 
       //  LatLng location = new LatLng(43.887501 , -79.428406);
         markerManager.fetchMarkers(43.887501 , -79.428406);
