@@ -23,13 +23,14 @@ public class Locations {
     private Double price;
     private String address;
     private Address mAddress;
+    private String description;
 
     public Locations() {
 
     }
 
     public Locations(Double lon, Double lat,String adTitle,Address mAddress,
-                     int bedRooms,int bathRooms, boolean isFurnished,boolean pets,Double price){
+                     int bedRooms,int bathRooms, boolean isFurnished,boolean pets,Double price, String description){
         this.lon = lon;
         this.lat = lat;
         this.adTitle = adTitle;
@@ -39,7 +40,7 @@ public class Locations {
         this.isFurnished =isFurnished;
         this.pets =pets;
         this.price = price;
-
+        this.description = description;
 
         this.address =address;  //for the time being
 
@@ -55,6 +56,14 @@ public class Locations {
 
     public Double getLat() {
         return lat;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public void setLat(Double lat) {
