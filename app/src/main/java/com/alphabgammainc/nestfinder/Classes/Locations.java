@@ -7,11 +7,13 @@ import android.widget.ImageView;
 import com.alphabgammainc.nestfinder.MapsActivity;
 import com.squareup.picasso.Picasso;
 
+import java.io.Serializable;
+
 /**
  * Created by davidhuang on 2017-04-25.
  */
 
-public class Locations {
+public class Locations implements Serializable{
     private Double lon;
     private Double lat;
     private String adTitle;

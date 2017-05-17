@@ -4,7 +4,7 @@
     android:background="@color/white"
     android:layout_height="match_parent">
 
-    <TextView
+  <!--  <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/ad_post_third_page"
@@ -12,8 +12,9 @@
         android:textStyle="bold"
         android:textAlignment="center"
         android:layout_gravity="center"
+        android:typeface="serif"
         android:layout_marginTop="20dp"
-        android:textColor="@color/black"/>
+        android:textColor="@color/black"/>-->
 
     <!-- text hints possibly needs to be localized -->
 
@@ -22,9 +23,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="45dp"
+        android:layout_marginRight="@dimen/text_view_margin_right"
+        android:layout_marginLeft="@dimen/text_view_margin_left"
+        android:layout_marginTop="55dp"
         android:background="@drawable/one_sided_border_editfield"
         android:spinnerMode="dropdown" />
 
@@ -36,10 +37,10 @@
         android:hint="@string/ad_city"
         android:layout_gravity="center"
         android:textColor="@color/black"
-        android:paddingLeft="10dp"
+        android:paddingLeft="@dimen/text_view_padding_left"
         android:textColorHint="@color/darkgray"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"
+        android:layout_marginRight="@dimen/text_view_margin_right"
+        android:layout_marginLeft="@dimen/text_view_margin_left"
         android:background="@drawable/one_sided_border_editfield"
         android:id="@+id/adCity"
         android:layout_marginTop="65dp"
@@ -51,8 +52,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"
+        android:layout_marginRight="@dimen/text_view_margin_right"
+        android:layout_marginLeft="@dimen/text_view_margin_left"
         android:layout_marginTop="85dp"
         android:background="@drawable/one_sided_border_editfield"
         android:spinnerMode="dropdown" />
