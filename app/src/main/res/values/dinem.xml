@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="fab_margin_create_listing_bot">120dp</dimen>
+    <dimen name="fab_margin_relocate_bot">70dp</dimen>
+
+
+
+    <dimen name="text_margin">16dp</dimen>
+</resources>

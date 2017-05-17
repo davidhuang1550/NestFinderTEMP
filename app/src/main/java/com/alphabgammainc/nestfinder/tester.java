@@ -12,7 +12,7 @@ import android.widget.Button;
 
 import com.alphabgammainc.nestfinder.Classes.Locations;
 import com.alphabgammainc.nestfinder.FirebaseConnection.DataBaseConnectionPresenter;
-import com.alphabgammainc.nestfinder.Ulilities.FragmentCallback;
+import com.alphabgammainc.nestfinder.Utilities.FragmentCallback;
 import com.google.firebase.database.DatabaseReference;
 
 /**
@@ -71,8 +71,8 @@ public class tester extends Fragment implements FragmentCallback{
 
     @Override
     public void callback(String key) {
-        DatabaseReference reference = DataBaseConnectionPresenter.getInstance().getDbReference().child("Locations").push();
-        reference.setValue(new Locations(lon,lat,address[position],key,price[position]));
+        DatabaseReference reference = DataBaseConnectionPresenter.getInstance(mActivity).getDbReference().child("Locations").push();
+        //reference.setValue(new Locations(lon,lat,address[position],key,price[position]));
         lat -= 0.01;
         lon -= 0.01;
         position++;

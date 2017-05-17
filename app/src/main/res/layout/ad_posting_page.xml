@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:clickable="true"
+    android:orientation="vertical">
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="469dp">
+
+        <TextView
+            android:id="@+id/adTitle"
+            android:layout_width="72dp"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_row="0"
+            android:text="Ad Title" />
+
+        <EditText
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="Add a title here!" />
+
+        <TextView
+            android:id="@+id/adstreetNumber"
+            android:layout_width="72dp"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_row="1"
+            android:text="Street Number" />
+
+        <EditText
+            android:id="@+id/streetNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="What's the street number?" />
+
+        <TextView
+            android:id="@+id/adstreetName"
+            android:layout_width="72dp"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_row="2"
+            android:text="Street Name" />
+
+        <EditText
+            android:id="@+id/streetName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="What's the street name?" />
+
+        <TextView
+            android:id="@+id/adcity"
+            android:layout_width="72dp"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_row="3"
+            android:text="City" />
+
+        <EditText
+            android:id="@+id/city"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="What city?" />
+
+        <TextView
+            android:id="@+id/adprovince"
+            android:layout_width="72dp"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_row="4"
+            android:text="Province" />
+
+        <EditText
+            android:id="@+id/province"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="What province?" />
+        <TextView
+            android:id="@+id/adcountry"
+            android:layout_width="72dp"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_row="5"
+            android:text="Country" />
+
+        <EditText
+            android:id="@+id/country"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="Which country?" />
+
+        <TextView
+            android:id="@+id/adpostalCode"
+            android:layout_width="72dp"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_row="6"
+            android:text="Postal Code" />
+
+        <EditText
+            android:id="@+id/postalCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="What's the postal code?" />
+
+        <TextView
+            android:id="@+id/adBedrooms"
+            android:layout_width="72dp"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_row="7"
+            android:text="Bed Rooms" />
+
+        <EditText
+            android:id="@+id/bedrooms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="How many bedrooms?" />
+
+        <TextView
+            android:id="@+id/adBathrooms"
+            android:layout_width="72dp"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_row="8"
+            android:text="BathRooms" />
+
+        <EditText
+            android:id="@+id/bathrooms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="How many bathrooms?" />
+
+
+        <CheckBox
+            android:id="@+id/furnished"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_row="9"
+            android:text="Furnished" />
+
+        <CheckBox
+            android:id="@+id/pets"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="2"
+            android:layout_row="9"
+            android:text="Pets" />
+
+        <EditText
+            android:id="@+id/price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:layout_column="1"
+            android:layout_row="9"
+            android:inputType="textPersonName"
+            android:hint="Price?" />
+    </GridLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/postAd"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:text="Post Ad"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="135dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentTop="true" />
+    </RelativeLayout>
+
+
+</LinearLayout>

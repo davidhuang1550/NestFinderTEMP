@@ -2,11 +2,11 @@ package com.alphabgammainc.nestfinder.FrontPage;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.location.Location;
 import android.support.annotation.Nullable;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import com.alphabgammainc.nestfinder.Classes.Locations;
 import com.alphabgammainc.nestfinder.MapsActivity;
 import com.alphabgammainc.nestfinder.R;
+import com.alphabgammainc.nestfinder.Utilities.FabManager.FabManager;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -24,17 +25,18 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
-import java.util.Observer;
+import java.util.Collections;
 
 /**
  * Created by davidhuang on 2017-04-25.
  */
 
-public class FrontPage extends Fragment implements OnMapReadyCallback , LoadMap {
+public class FrontPage extends Fragment implements OnMapReadyCallback , ManageMap {
     private View mView;
     private Activity mActivity;
     private MapManager mapManager;
@@ -42,7 +44,9 @@ public class FrontPage extends Fragment implements OnMapReadyCallback , LoadMap 
     private RecyclerView listView;
     private ArrayList<Locations> locations;
     private FrontPageAdapter adapter;
+    private LinearLayoutManager layoutManager;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private FabManager fabManager;
     // Temporary until we actually start pulling data
     private AppBarLayout mAppBarLayout;
 
@@ -63,6 +67,7 @@ public class FrontPage extends Fragment implements OnMapReadyCallback , LoadMap 
         mView = inflater.inflate(R.layout.front_page, container, false);
 
         MapView mMapView = (MapView) mView.findViewById(R.id.map);
+
         mMapView.onCreate(savedInstanceState);
 
         mMapView.onResume(); // needed to get the map to display immediately
@@ -78,6 +83,17 @@ public class FrontPage extends Fragment implements OnMapReadyCallback , LoadMap 
         // inproper way atm because we can make the support bar not collaspe.
         ((MapsActivity)mActivity).getSupportActionBar().hide();
 
+        FloatingActionButton generalTooling = (FloatingActionButton) mView.findViewById(R.id.generalTool);
+        FloatingActionButton createListing = (FloatingActionButton)  mView.findViewById(R.id.createListing);
+        FloatingActionButton centerLocation = (FloatingActionButton) mView.findViewById(R.id.centerLocation);
+
+
+
+        fabManager = FabManager.getInstance(generalTooling,createListing,centerLocation,mActivity); // calling get instance automically shows the fab
+        fabManager.setListeners();
+        fabManager._hideAllNonGeneralButtons();
+
+
         mAppBarLayout = (AppBarLayout) mView.findViewById(R.id.app_bar);
         CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) mAppBarLayout.getLayoutParams();
         AppBarLayout.Behavior behavior = new AppBarLayout.Behavior();
@@ -89,15 +105,19 @@ public class FrontPage extends Fragment implements OnMapReadyCallback , LoadMap 
         });
         params.setBehavior(behavior);
 
-       // swipeRefreshLayout = (SwipeRefreshLayout)mView.findViewById(R.id.swipe);
-        //swipeRefreshLayout.setRefreshing(true);
+        swipeRefreshLayout = (SwipeRefreshLayout)mView.findViewById(R.id.swipe);
+        swipeRefreshLayout.setRefreshing(true);
         //swipeRefreshLayout.setEnabled(false);
 
         locations = new ArrayList<>();
-        adapter = new FrontPageAdapter(mActivity, locations);
+
         listView = (RecyclerView)mView.findViewById(R.id.rview);
 
-        listView.setLayoutManager(new LinearLayoutManager(mActivity));
+        layoutManager =  new LinearLayoutManager(mActivity);
+
+        listView.setLayoutManager(layoutManager);
+
+        adapter = new FrontPageAdapter(mActivity, locations, this, listView);
 
         listView.setAdapter(adapter);
 
@@ -111,7 +131,11 @@ public class FrontPage extends Fragment implements OnMapReadyCallback , LoadMap 
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        MarkerManager markerManager = new MarkerManager(mActivity , this, locations, adapter);
+        final MarkerManager markerManager = new MarkerManager(mActivity , this, locations, adapter);
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            MapStyleOptions style =MapStyleOptions.loadRawResourceStyle(this.getContext(),R.raw.mapstyle);
+            mMap.setMapStyle(style);
+        }
 
       //  LatLng location = new LatLng(43.887501 , -79.428406);
         markerManager.fetchMarkers(43.887501 , -79.428406);
@@ -123,7 +147,12 @@ public class FrontPage extends Fragment implements OnMapReadyCallback , LoadMap 
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
-                System.out.println(marker);
+                Locations location = mapManager.getListMarker(marker);
+
+                // swap the two location objects in the array list so that it can be displayed at the top of the list
+                // when the user selects a marker.
+                Collections.swap(locations, 0, locations.indexOf(location));
+                adapter.notifyDataSetChanged();
 
                 return false;
             }
@@ -137,20 +166,29 @@ public class FrontPage extends Fragment implements OnMapReadyCallback , LoadMap 
      */
     @Override
     public void LoadMap(ArrayList<Locations> locations) {
+        swipeRefreshLayout.setEnabled(false);
         // Add a marker in Sydney and move the camera
         for(Locations location : locations){
             LatLng position = new LatLng(location.getLat(),location.getLon());
             Marker marker = mMap.addMarker(new MarkerOptions().position(position).title(location.getAddress()));
-            ListMarker listMarker = new ListMarker(location.getAddress());
-            mapManager.addMapMarker(marker, listMarker);
+            mapManager.addMapMarker(marker, location);
         }
 
-       /* FrontPageAdapter adapter = new FrontPageAdapter(mActivity, locations);
-        listView = (RecyclerView)mView.findViewById(R.id.rview);
 
-        listView.setLayoutManager(new LinearLayoutManager(mActivity));
-
-        listView.setAdapter(adapter);*/
     //    swipeRefreshLayout.setRefreshing(false);
+    }
+
+
+    /**
+     * we probably dont need this function but just leave it here for now.
+     * right now it is used for callback function for the adapter since we cann set a overall list listener
+     *
+     * @param location the key object that is used to search the map for the corresponding value.
+     */
+    @Override
+    public void setMarkerFocusCallback(Locations location) {
+        Marker marker = mapManager.getMapmarker(location);
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(marker.getPosition(),14));
+        marker.showInfoWindow();
     }
 }

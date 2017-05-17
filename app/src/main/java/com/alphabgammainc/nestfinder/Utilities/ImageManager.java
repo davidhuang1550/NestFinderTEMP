@@ -1,4 +1,4 @@
-package com.alphabgammainc.nestfinder.Ulilities;
+package com.alphabgammainc.nestfinder.Utilities;
 
 import android.app.Activity;
 import android.content.ContentUris;

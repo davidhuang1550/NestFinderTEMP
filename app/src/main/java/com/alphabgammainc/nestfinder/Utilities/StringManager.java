@@ -1,4 +1,4 @@
-package com.alphabgammainc.nestfinder.Ulilities;
+package com.alphabgammainc.nestfinder.Utilities;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
