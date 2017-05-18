@@ -113,6 +113,8 @@ public class FrontPageAdapter  extends RecyclerView.Adapter<FrontPageAdapter.Vie
                 switch(item.getTitle().toString()){
                     case "Details":
 
+
+
                         // create the fragment and pass in the locations object.
                         DetailsPage detailsPage = new DetailsPage();
                         Bundle bundle = new Bundle();
@@ -137,8 +139,6 @@ public class FrontPageAdapter  extends RecyclerView.Adapter<FrontPageAdapter.Vie
         inflater.inflate(R.menu.details, popup.getMenu());
 
         popup.show();
-
-
     }
 
 
