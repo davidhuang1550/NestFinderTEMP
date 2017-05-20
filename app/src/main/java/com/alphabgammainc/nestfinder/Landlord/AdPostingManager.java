@@ -25,6 +25,7 @@ public class AdPostingManager extends FragmentActivity {
     private AdPostingPageOne adPostingPageOne = new AdPostingPageOne();
     private AdPostingPageTwo adPostingPageTwo = new AdPostingPageTwo();
     private AdPostingPageThree adPostingPageThree = new AdPostingPageThree();
+    private AdPostingPageFour adPostingPageFour= new AdPostingPageFour();
 
 
     private ArrayList<Pages> pages = new ArrayList<>();
@@ -41,6 +42,7 @@ public class AdPostingManager extends FragmentActivity {
         pages.add(adPostingPageOne);
         pages.add(adPostingPageTwo);
         pages.add(adPostingPageThree);
+        pages.add(adPostingPageFour);
 
         location = new Locations();
         address = new Address();
@@ -48,7 +50,7 @@ public class AdPostingManager extends FragmentActivity {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 
         ft.setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit);
-        ft.add(R.id.content_frame, (android.support.v4.app.Fragment) pages.get(0),"fragment").commit();
+        ft.add(R.id.content_frame, (android.support.v4.app.Fragment) pages.get(3),"fragment").commit();
     }
 
     /**
