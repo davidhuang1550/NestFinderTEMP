@@ -3,6 +3,8 @@
     <string name="title_activity_maps">Map</string>
     <string name="upload_image">Upload Image</string>
     <string name="ad_posting_name">Ad Post Manager</string>
+    <string name="action_settings">Settings</string>
+
 
 
     <!-- Start user interaction text -->
@@ -10,6 +12,7 @@
     <string name="ad_post_second_page">Where is it?</string>
     <string name="ad_post_third_page">Last thing.</string>
     <string name="ad_post_fourth_page">Add some pictures</string>
+
 
     <!-- END-->
     <!-- Hints Start Hint -->
@@ -22,4 +25,9 @@
     <string name="ad_city">City</string>
 
     <!-- End Hints -->
+
+    <!-- Start of ad details -->
+    <string name="ad_display_details">Details</string>
+    <!-- END of ad details-->
+
 </resources>

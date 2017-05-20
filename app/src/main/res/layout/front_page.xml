@@ -67,27 +67,27 @@
             </android.support.design.widget.CollapsingToolbarLayout>
         </android.support.design.widget.AppBarLayout>
 
-        <FrameLayout
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_invisible_main"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="top|end"
+            android:layout_margin="@dimen/fab_margin"
+            android:visibility="invisible"
             app:layout_anchor="@id/app_bar"
-            android:layout_gravity="bottom|end">
-
-
-
-        </FrameLayout>
-
+            app:layout_anchorGravity="bottom|end" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/generalTool"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/fab_margin"
-            app:layout_anchor="@id/app_bar"
+            app:layout_anchor="@id/fab_invisible_main"
             app:useCompatPadding="true"
             app:fabSize="normal"
-            app:layout_anchorGravity="bottom|end"
-            app:srcCompat="@android:drawable/ic_dialog_email" />
+            android:scaleType="centerCrop"
+            app:layout_anchorGravity="top"
+            app:srcCompat="@drawable/create_ad_next_button" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab_invisible"

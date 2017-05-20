@@ -57,7 +57,6 @@ public class AdPostingPageFour extends Fragment implements Pages,View.OnClickLis
     private ArrayList<Bitmap> mImage;
     private GridElementAdapter mAdapter;
 
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +66,6 @@ public class AdPostingPageFour extends Fragment implements Pages,View.OnClickLis
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-
         mView = inflater.inflate(R.layout.ad_posting_page_four, container ,false);
         myCamera=(ImageView)mView.findViewById(R.id.ivCamera);
         myImage=(ImageView)mView.findViewById(R.id.ivGallery);
