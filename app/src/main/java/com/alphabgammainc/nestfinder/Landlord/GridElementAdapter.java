@@ -14,9 +14,11 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 
+import com.alphabgammainc.nestfinder.MapsActivity;
 import com.alphabgammainc.nestfinder.R;
 import com.alphabgammainc.nestfinder.Utilities.ConfirmationDialog;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
@@ -24,35 +26,32 @@ import java.util.ArrayList;
  * Created by soutrikbarua on 2017-05-17.
  */
 
-public class GridElementAdapter extends RecyclerView.Adapter<GridElementAdapter.SimpleViewHolder>{
+public class GridElementAdapter extends RecyclerView.Adapter<GridElementAdapter.SimpleViewHolder>
+        implements ImageDeletionCallBack, Serializable{
 
     private Activity mActivity;
     private ArrayList<Bitmap> imageList;
+    private GridElementAdapter self;
+
 
     public GridElementAdapter(Activity mActivity,ArrayList<Bitmap> imageList){
         this.mActivity = mActivity;
         this.imageList=imageList;
+        self = this;
     }
 
-    public static class SimpleViewHolder extends RecyclerView.ViewHolder {
+    @Override
+    public void DeleteImage(int position) {
+        imageList.remove(position);
+        notifyDataSetChanged();
+    }
+
+    public class SimpleViewHolder extends RecyclerView.ViewHolder {
         public final ImageView myImage;
 
         public SimpleViewHolder(View view) {
             super(view);
             myImage=(ImageView)view.findViewById(R.id.Img);
-            myImage.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    Bundle bundle = new Bundle();
-                    ConfirmationDialog confirmationDialog = new ConfirmationDialog();
-                    confirmationDialog.setArguments(bundle);
-                    //confirmationDialog.show(.getFragmentManager(),"Alert Dialog Fragment");
-
-                    Toast.makeText(v.getContext(),"Delete",Toast.LENGTH_LONG).show();
-                    return true;
-                }
-            });
-
         }
     }
 
@@ -66,6 +65,22 @@ public class GridElementAdapter extends RecyclerView.Adapter<GridElementAdapter.
     @Override
     public void onBindViewHolder(SimpleViewHolder holder, final int position) {
         holder.myImage.setImageBitmap(imageList.get(position));
+        holder.myImage.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString("Title", "Deleting Image");
+                bundle.putString("Message", "Are you sure you want to delete the image?");
+                bundle.putSerializable("CallBack", self);
+                bundle.putInt("Position", position);
+
+                ConfirmationDialog confirmationDialog = new ConfirmationDialog();
+                confirmationDialog.setArguments(bundle);
+                confirmationDialog.show(((AdPostingManager)mActivity).getFragmentManager(),"Alert Dialog Fragment");
+
+                return true;
+            }
+        });
     }
 
     @Override

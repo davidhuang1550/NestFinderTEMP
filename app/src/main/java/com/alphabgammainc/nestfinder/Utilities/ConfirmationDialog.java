@@ -7,6 +7,8 @@ import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
+import com.alphabgammainc.nestfinder.Landlord.ImageDeletionCallBack;
+
 /**
  * Created by soutrikbarua on 2017-05-20.
  */
@@ -29,13 +31,13 @@ public class ConfirmationDialog extends DialogFragment {
         if(bundle!=null){
             try {
                 alertDialog.setTitle(bundle.getString("Title"));
-                alertDialog.setMessage(bundle.getString("Message", "Confirmation sent to manager"));
+                alertDialog.setMessage(bundle.getString("Message", ""));
             }catch (Exception e){
                 e.printStackTrace();
             }
         }
         else{
-            alertDialog.setMessage("Confirmation sent to manager");
+            alertDialog.setMessage("");
         }
         alertDialog.setNegativeButton("Cancel",new DialogInterface.OnClickListener(){
             @Override
@@ -48,10 +50,10 @@ public class ConfirmationDialog extends DialogFragment {
         alertDialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-               /* boolean isback = bundle.getBoolean("IsBack",true);
-                if(isback==false) {
-                //        ((MainActivity) mActivity).onBackPressed();
-                }*/
+              // delete image
+                ImageDeletionCallBack callback = (ImageDeletionCallBack) bundle.getSerializable("CallBack");
+                int position = bundle.getInt("Position");
+                if(callback != null) callback.DeleteImage(position);
             }
         });
         return alertDialog.create();
