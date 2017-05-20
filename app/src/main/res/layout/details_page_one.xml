@@ -40,9 +40,19 @@
                                 <TableLayout
                                     android:layout_width="match_parent"
                                     android:paddingBottom="30dp"
-                                    android:paddingTop="20dp"
+                                    android:paddingTop="10dp"
                                     android:id="@+id/legend"
                                     android:layout_height="wrap_content">
+
+                                    <TableRow
+                                        android:paddingLeft="20dp"
+                                        android:paddingBottom="20dp">
+                                        <TextView
+                                            android:textColor="@color/white"
+                                            android:text="Legend"
+                                            android:textSize="25sp"/>
+
+                                    </TableRow>
 
                                     <TableRow
                                         android:paddingLeft="20dp">
@@ -61,7 +71,7 @@
                                                 android:paddingLeft="10dp"
                                                 android:layout_height="wrap_content"
                                                 android:textColor="@color/white"
-                                                android:text="Gast Station"/>
+                                                android:text="Gas Station"/>
                                         </LinearLayout>
 
                                         <LinearLayout

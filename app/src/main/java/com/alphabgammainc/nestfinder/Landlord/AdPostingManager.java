@@ -43,11 +43,6 @@ public class AdPostingManager extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ad_posting_container);
 
-
-      /*  // register the pages
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);*/
-
         pages.add(adPostingPageOne);
         pages.add(adPostingPageTwo);
         pages.add(adPostingPageThree);
