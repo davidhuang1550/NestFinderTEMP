@@ -152,8 +152,6 @@ public class AdPostingPageThree extends Fragment implements View.OnClickListener
         adCity = (EditText)mView.findViewById(R.id.adCity);
 
         mView.findViewById(R.id.nextpage).setOnClickListener(this);
-
-
         return mView;
     }
 
@@ -168,6 +166,10 @@ public class AdPostingPageThree extends Fragment implements View.OnClickListener
                 // create some error feedback
                 //Address address = ((AdPostingManager)mActivity).getAddress();
                // address.setCity();
+                ((AdPostingManager)mActivity).nextView(3);
+                /**
+                 * @// TODO: 2017-05-16 Implement the existing Google services to the modified views
+                 */
             }
         }
     }
