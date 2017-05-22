@@ -54,6 +54,8 @@
             </intent-filter>
         </activity>
         <activity android:label="@string/ad_posting_name" android:name=".Landlord.AdPostingManager"/>
+        <activity android:label="@string/ad_details_maanger" android:name=".DetailsPage.DetailsPage"/>
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.alphabgammainc.nestfinder.fileprovider"

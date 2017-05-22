@@ -39,6 +39,7 @@ public class AdPostingPageTwo  extends Fragment implements View.OnClickListener,
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        ((AdPostingManager)mActivity).setTitle(R.string.ad_creation_two);
 
         mView = inflater.inflate(R.layout.ad_posting_page_two, container ,false);
 
@@ -63,9 +64,11 @@ public class AdPostingPageTwo  extends Fragment implements View.OnClickListener,
 
                // Locations location = ((AdPostingManager)mActivity).getlocation();
                 Address address =((AdPostingManager)mActivity).getAddress();
-                address.setStreetName(adAddressString);
+                address.setAddress(adAddressString);
                 address.setPostalCode(adPostalCodeString);
-                ((AdPostingManager)mActivity).setAddress(address);
+                //for now this is here since we still need the other example ads to work
+                ((AdPostingManager)mActivity).getlocation().setAddress(adAddressString);
+              //  ((AdPostingManager)mActivity).setAddress(address);
                 ((AdPostingManager)mActivity).nextView(2);
 
             }

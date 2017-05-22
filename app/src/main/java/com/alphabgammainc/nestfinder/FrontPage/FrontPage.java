@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -92,7 +93,6 @@ public class FrontPage extends Fragment implements OnMapReadyCallback , ManageMa
         fabManager = FabManager.getInstance(generalTooling,createListing,centerLocation,mActivity); // calling get instance automically shows the fab
         fabManager.setListeners();
         fabManager._hideAllNonGeneralButtons();
-
 
         mAppBarLayout = (AppBarLayout) mView.findViewById(R.id.app_bar);
         CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) mAppBarLayout.getLayoutParams();

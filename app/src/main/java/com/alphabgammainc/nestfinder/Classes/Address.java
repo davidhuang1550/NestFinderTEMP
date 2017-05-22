@@ -19,14 +19,16 @@ public class Address implements Serializable {
     private String city;
     private String country;
     private String province;
+    private String address;
 
     public Address(){
 
     }
 
-    public Address(String streetNumber,String streetName,String city, String province,
+    public Address(String address,String streetNumber,String streetName,String city, String province,
                    String postalCode,String country)
     {
+        this.address = address;
         this.streetName=streetName;
         this.streetNumber = streetNumber;
         this.city=city;
@@ -82,4 +84,11 @@ public class Address implements Serializable {
         this.province = province;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 }
