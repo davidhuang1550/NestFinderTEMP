@@ -2,6 +2,7 @@ package com.alphabgammainc.nestfinder.FrontPage;
 
 import android.Manifest;
 import android.app.Activity;
+
 import android.app.Fragment;
 import android.content.Context;
 import android.content.pm.PackageManager;
