@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
 import com.alphabgammainc.nestfinder.Classes.Locations;
+import com.alphabgammainc.nestfinder.DetailsPage.DetailsPage;
 import com.alphabgammainc.nestfinder.FirebaseConnection.DataBaseConnectionPresenter;
 import com.alphabgammainc.nestfinder.FrontPage.FrontPage;
 import com.alphabgammainc.nestfinder.Loading.InitialStartUp;
