@@ -9,32 +9,47 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 
+import com.alphabgammainc.nestfinder.Classes.Locations;
 import com.alphabgammainc.nestfinder.DetailsPage.DetailsPage;
 import com.alphabgammainc.nestfinder.FirebaseConnection.DataBaseConnectionPresenter;
 import com.alphabgammainc.nestfinder.FrontPage.FrontPage;
+import com.alphabgammainc.nestfinder.Loading.InitialStartUp;
 import com.alphabgammainc.nestfinder.Utilities.FabManager.FabManager;
 import com.alphabgammainc.nestfinder.Utilities.FragmentCallback;
 import com.alphabgammainc.nestfinder.Utilities.ImageCallBack;
 import com.alphabgammainc.nestfinder.Utilities.ImageManager;
+import com.google.android.gms.maps.GoogleMap;
 import com.google.firebase.database.DatabaseReference;
 
 import java.util.ArrayList;
 
 public class MapsActivity extends AppCompatActivity implements ImageCallBack{
     private FragmentCallback fragmentCallback;
+    private ArrayList<Locations> locationses;
+    FragmentManager fragmentManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
-
-        FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().add(R.id.content_frame,new FrontPage()).commit();
+        fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction().add(R.id.content_frame,new InitialStartUp()).commit();
     }
 
     /*
         Permissions
      */
+
+    public void showFrontPage(ArrayList<Locations> locationses){
+        this.locationses = locationses;
+        if(fragmentManager == null)fragmentManager = getFragmentManager();
+
+        fragmentManager.beginTransaction().replace(R.id.content_frame,new FrontPage()).commit();
+    }
+
+    public ArrayList<Locations> getLocationses(){
+        return locationses;
+    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
@@ -77,6 +92,10 @@ public class MapsActivity extends AppCompatActivity implements ImageCallBack{
                         fragmentCallback.callback(reference.getKey());
                     }
                     break;
+
+                case 2:
+
+                    break;
             }
         }
     }
@@ -85,6 +104,5 @@ public class MapsActivity extends AppCompatActivity implements ImageCallBack{
     public void ImageOnReady(Uri downloadUrl) {
         // we dont need to display it
     }
-
 
 }

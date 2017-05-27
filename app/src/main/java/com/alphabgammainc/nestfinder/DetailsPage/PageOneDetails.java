@@ -44,6 +44,8 @@ public class PageOneDetails extends Fragment implements OnMapReadyCallback, Deta
 
         mMapView.onCreate(savedInstanceState);
 
+
+
         mMapView.onResume(); // needed to get the map to display immediately
 
         try {
@@ -51,6 +53,7 @@ public class PageOneDetails extends Fragment implements OnMapReadyCallback, Deta
         } catch (Exception e) {
             e.printStackTrace();
         }
+
 
         mMapView.getMapAsync(this);
 

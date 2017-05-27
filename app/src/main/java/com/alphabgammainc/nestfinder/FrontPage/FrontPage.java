@@ -11,7 +11,7 @@ import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.ActivityCompat;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -104,9 +104,6 @@ public class FrontPage extends Fragment implements OnMapReadyCallback, ManageMap
 
         mMapView.getMapAsync(this);
 
-        // inproper way atm because we can make the support bar not collaspe.
-        ((MapsActivity) mActivity).getSupportActionBar().hide();
-
         FloatingActionButton generalTooling = (FloatingActionButton) mView.findViewById(R.id.generalTool);
         FloatingActionButton createListing = (FloatingActionButton) mView.findViewById(R.id.createListing);
         FloatingActionButton centerLocation = (FloatingActionButton) mView.findViewById(R.id.centerLocation);
@@ -115,7 +112,6 @@ public class FrontPage extends Fragment implements OnMapReadyCallback, ManageMap
         fabManager = FabManager.getInstance(generalTooling, createListing, centerLocation, mActivity); // calling get instance automically shows the fab
         fabManager.setListeners();
         fabManager._hideAllNonGeneralButtons();
-
 
         mAppBarLayout = (AppBarLayout) mView.findViewById(R.id.app_bar);
         CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) mAppBarLayout.getLayoutParams();
@@ -128,9 +124,9 @@ public class FrontPage extends Fragment implements OnMapReadyCallback, ManageMap
         });
         params.setBehavior(behavior);
 
-        swipeRefreshLayout = (SwipeRefreshLayout) mView.findViewById(R.id.swipe);
-        swipeRefreshLayout.setRefreshing(true);
-        //swipeRefreshLayout.setEnabled(false);
+        swipeRefreshLayout = (SwipeRefreshLayout)mView.findViewById(R.id.swipe);
+       // swipeRefreshLayout.setRefreshing(true);
+        swipeRefreshLayout.setEnabled(false);
 
         locations = new ArrayList<>();
 
@@ -139,6 +135,8 @@ public class FrontPage extends Fragment implements OnMapReadyCallback, ManageMap
         layoutManager = new LinearLayoutManager(mActivity);
 
         listView.setLayoutManager(layoutManager);
+
+        locations = ((MapsActivity)mActivity).getLocationses();
 
         adapter = new FrontPageAdapter(mActivity, locations, this, listView);
 
@@ -153,18 +151,19 @@ public class FrontPage extends Fragment implements OnMapReadyCallback, ManageMap
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        final MarkerManager markerManager = new MarkerManager(mActivity , this, locations, adapter);
+        //final MarkerManager markerManager = new MarkerManager(mActivity , this, locations, adapter);
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
             MapStyleOptions style =MapStyleOptions.loadRawResourceStyle(this.getContext(),R.raw.mapstyle);
             mMap.setMapStyle(style);
         }
 
       //  LatLng location = new LatLng(43.887501 , -79.428406);
-        markerManager.fetchMarkers(43.887501 , -79.428406);
+       // markerManager.fetchMarkers(43.887501 , -79.428406);
 
         // Updates the location and zoom of the MapView
         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(43.887501 , -79.428406), 10);
         mMap.animateCamera(cameraUpdate);
+        LoadMap(locations);
 
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
@@ -188,7 +187,7 @@ public class FrontPage extends Fragment implements OnMapReadyCallback, ManageMap
      */
     @Override
     public void LoadMap(ArrayList<Locations> locations) {
-        swipeRefreshLayout.setEnabled(false);
+        //swipeRefreshLayout.setEnabled(false);
         // Add a marker in Sydney and move the camera
         for(Locations location : locations){
             LatLng position = new LatLng(location.getLat(),location.getLon());
