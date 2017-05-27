@@ -1,5 +1,7 @@
 package com.alphabgammainc.nestfinder.Classes;
 
+import java.io.Serializable;
+
 /**
  * The Address object stores the street number , street name ,postal code , city ,country
  * and province.
@@ -8,7 +10,7 @@ package com.alphabgammainc.nestfinder.Classes;
  * Created by soutrikbarua on 2017-04-30.
  */
 
-public class Address {
+public class Address implements Serializable {
 
 
     private String streetNumber;
