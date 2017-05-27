@@ -59,7 +59,7 @@ public class FrontPageAdapter  extends RecyclerView.Adapter<FrontPageAdapter.Vie
     @Override
     public void onBindViewHolder(final FrontPageAdapter.ViewHolder holder, final int position) {
 
-        ImageManager.downloadImage(mActivity,holder.image, locationses.get(position).getRentImage());
+        ImageManager.downloadImage(mActivity,holder.image, locationses.get(position).getRentImage().get(0));
         holder.address.setText(this.locationses.get(position).getAddress());
         holder.price.setText(Double.toString((this.locationses.get(position).getPrice())));
         holder.details.setOnClickListener(new View.OnClickListener() {

@@ -54,7 +54,7 @@ public class AdPostingManager extends AppCompatActivity {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 
         ft.setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit);
-        ft.add(R.id.content_frame, (android.support.v4.app.Fragment) pages.get(3),"fragment").commit();
+        ft.add(R.id.content_frame, (android.support.v4.app.Fragment) pages.get(0),"fragment").commit();
     }
 
     @Override

@@ -27,6 +27,7 @@ public class PageOneDetails extends Fragment implements OnMapReadyCallback, Deta
 
     private Activity mActivity;
     private View mView;
+    private NearbyPlaces myPlaces;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,7 +67,17 @@ public class PageOneDetails extends Fragment implements OnMapReadyCallback, Deta
             MapStyleOptions style =MapStyleOptions.loadRawResourceStyle(this.getContext(),R.raw.mapstyle);
             googleMap.setMapStyle(style);
         }
-
+        myPlaces = new NearbyPlaces();
+        /**
+         * this is where you pass the latitude and longitude along with the search type
+         */
+        myPlaces.getPlaces(43.887501 , -79.428406,"gas_station",googleMap);
         googleMap.animateCamera(cameraUpdate);
     }
+
+    /**
+     * The methods below are used to implement all the listed places
+     */
+
+
 }
