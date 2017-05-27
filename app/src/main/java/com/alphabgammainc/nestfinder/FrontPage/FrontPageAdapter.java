@@ -22,6 +22,7 @@ import com.alphabgammainc.nestfinder.Landlord.AdPostingManager;
 import com.alphabgammainc.nestfinder.MapsActivity;
 import com.alphabgammainc.nestfinder.R;
 import com.alphabgammainc.nestfinder.Utilities.ImageManager;
+import com.google.android.gms.maps.GoogleMap;
 
 import java.util.ArrayList;
 
@@ -40,7 +41,8 @@ public class FrontPageAdapter  extends RecyclerView.Adapter<FrontPageAdapter.Vie
      * @param activity
      * @param locationses
      */
-    public FrontPageAdapter(Activity activity, ArrayList<Locations> locationses, ManageMap callback, RecyclerView recyclerView ){
+    public FrontPageAdapter(Activity activity, ArrayList<Locations> locationses, ManageMap callback,
+                            RecyclerView recyclerView){
         this.mActivity = activity;
         this.locationses =locationses;
         this.callback = callback;
@@ -112,22 +114,12 @@ public class FrontPageAdapter  extends RecyclerView.Adapter<FrontPageAdapter.Vie
                 switch(item.getTitle().toString()){
                     case "Details":
 
-
-
-                        // create the fragment and pass in the locations object.
-                    //    DetailsPage detailsPage = new DetailsPage();
                         Bundle bundle = new Bundle();
                         bundle.putSerializable("location",locationses.get(position));
 
                         Intent myIntent = new Intent(mActivity, DetailsPage.class);
                         myIntent.putExtra("bundle", bundle);
-                        mActivity.startActivity(myIntent);
-                        //detailsPage.setArguments(bundle);
-
-                        //android.support.v4.app.FragmentTransaction ft = ((MapsActivity)mActivity).getSupportFragmentManager().beginTransaction();
-
-                        //ft.setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit);
-                        //ft.add(R.id.content_frame, (android.support.v4.app.Fragment) detailsPage,"details").commit();
+                        mActivity.startActivityForResult(myIntent, 2);
 
                         break;
 

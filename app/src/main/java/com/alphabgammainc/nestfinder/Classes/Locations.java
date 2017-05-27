@@ -13,7 +13,6 @@ import java.util.ArrayList;
 /**
  * Created by davidhuang on 2017-04-25.
  */
-
 public class Locations implements Serializable{
     private Double lon;
     private Double lat;
