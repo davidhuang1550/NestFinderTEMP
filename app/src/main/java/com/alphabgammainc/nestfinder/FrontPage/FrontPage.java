@@ -124,7 +124,7 @@ public class FrontPage extends Fragment implements OnMapReadyCallback, ManageMap
                     // functionality that depends on this permission.
                     Toast.makeText(mActivity, "permission denied", Toast.LENGTH_LONG).show();
                 }
-                return;
+
             }
 
             // other 'case' lines to check for other
