@@ -16,8 +16,10 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 /**
  * Created by davidhuang on 2017-05-20.
@@ -70,7 +72,14 @@ public class PageOneDetails extends Fragment implements OnMapReadyCallback, Deta
             MapStyleOptions style =MapStyleOptions.loadRawResourceStyle(this.getContext(),R.raw.mapstyle);
             googleMap.setMapStyle(style);
         }
+        /*
+        @mMarker
+        Set the starting point of the closest house
+        In our case this should be the LatLng of the listed property
+         */
+        LatLng mMarker = new LatLng(43.887501 , -79.428406);
         myPlaces = new NearbyPlaces();
+        googleMap.addMarker(new MarkerOptions().position(mMarker).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
         /**
          * this is where you pass the latitude and longitude along with the search type
          */
