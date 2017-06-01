@@ -13,28 +13,29 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v17.leanback.widget.HorizontalGridView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.FileProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
+
+import com.alphabgammainc.nestfinder.GoogleService.ConversionCallback;
+import com.alphabgammainc.nestfinder.GoogleService.LatLong;
+import com.alphabgammainc.nestfinder.GoogleService.LatLongObj;
+import com.alphabgammainc.nestfinder.LoadingDialog.ProgressBarManager;
 import com.alphabgammainc.nestfinder.R;
 import com.alphabgammainc.nestfinder.Utilities.PermissionsManager;
 
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Date;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -46,15 +47,54 @@ public class AdPostingPageFour extends Fragment implements Pages,View.OnClickLis
 
     private View mView;
     private Activity mActivity;
-    private ImageView myCamera;
+    private ImageView mCamera;
     private ImageView myImage;
-    private ImageView myUpload;
-    private ImageView mImageView;
     static final int REQUEST_IMAGE_CAPTURE =1;
     static final int REQUEST_IMAGE_GALLERY =2;
     private HorizontalGridView horizontalGridView;
-    private String mCurrentPhotoPath;
     private ArrayList<Bitmap> mImage;
+
+    /**
+     * @myCamera : this part lets the user access their device camera
+     */
+    private ImageView.OnClickListener cameraListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent myCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            if (myCameraIntent.resolveActivity(mActivity.getPackageManager()) != null) {
+
+                if (ContextCompat.checkSelfPermission(mActivity, Manifest.permission.CAMERA)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(mActivity,
+                            new String[]{Manifest.permission.CAMERA},
+                            0);
+                }
+                else{
+                    startActivityForResult(myCameraIntent, REQUEST_IMAGE_CAPTURE);
+                }
+            }
+        }
+    };
+
+    /**
+     * @myImage : this part lets the user access the devices gallery
+     */
+    private ImageView.OnClickListener galleryListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if(PermissionsManager.checkReadExternalPermission(mActivity)){
+                Intent intent = new Intent(Intent.ACTION_PICK,
+                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+                intent.setType("image/*");
+                startActivityForResult(intent, REQUEST_IMAGE_GALLERY);
+            }
+            else{
+                PermissionsManager.requestForSpecificPermission(mActivity);
+            }
+        }
+    };
+
     private GridElementAdapter mAdapter;
 
     @Override
@@ -66,51 +106,20 @@ public class AdPostingPageFour extends Fragment implements Pages,View.OnClickLis
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        ((AdPostingManager)mActivity).setTitle(R.string.ad_creation_four);
+
         mView = inflater.inflate(R.layout.ad_posting_page_four, container ,false);
-        myCamera=(ImageView)mView.findViewById(R.id.ivCamera);
+        mCamera=(ImageView)mView.findViewById(R.id.ivCamera);
         myImage=(ImageView)mView.findViewById(R.id.ivGallery);
-        myUpload=(ImageView)mView.findViewById(R.id.upload);
+        //myUpload=(ImageView)mView.findViewById(R.id.upload);
         mImage = new ArrayList<Bitmap>();
-        /**
-         * @myCamera : this part lets the user access their device camera
-         */
-        myCamera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent myCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                if (myCameraIntent.resolveActivity(mActivity.getPackageManager()) != null) {
 
-                    if (ContextCompat.checkSelfPermission(mActivity, Manifest.permission.CAMERA)
-                            != PackageManager.PERMISSION_GRANTED) {
-                        ActivityCompat.requestPermissions(mActivity,
-                                new String[]{Manifest.permission.CAMERA},
-                                0);
-                    }
-                    else{
-                    startActivityForResult(myCameraIntent, REQUEST_IMAGE_CAPTURE);
-                    }
-                }
-            }
-        });
-        /**
-         * @myImage : this part lets the user access the devices gallery
-         */
-        myImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(PermissionsManager.checkReadExternalPermission(mActivity)){
-                Intent intent = new Intent(Intent.ACTION_PICK,
-                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-                intent.setType("image/*");
-                startActivityForResult(intent, REQUEST_IMAGE_GALLERY);
-                }
-                else{
-                    PermissionsManager.requestForSpecificPermission(mActivity);
-                }
+        mCamera.setOnClickListener(cameraListener);
 
-            }
-        });
+        myImage.setOnClickListener(galleryListener);
+
+        Button upload = (Button)mView.findViewById(R.id.upload);
+        upload.setOnClickListener(this);
 
         horizontalGridView = (HorizontalGridView) mView.findViewById(R.id.gridView);
         mAdapter = new GridElementAdapter(mActivity,mImage);
@@ -156,56 +165,29 @@ public class AdPostingPageFour extends Fragment implements Pages,View.OnClickLis
         }
     }
 
-
-    private File createImageFile() throws IOException {
-        // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = mActivity.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
-
-        // Save a file: path for use with ACTION_VIEW intents
-        mCurrentPhotoPath = image.getAbsolutePath();
-        return image;
-    }
-
-    static final int REQUEST_TAKE_PHOTO = 1;
-
-    private void dispatchTakePictureIntent() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        // Ensure that there's a camera activity to handle the intent
-        if (takePictureIntent.resolveActivity(mActivity.getPackageManager()) != null) {
-            // Create the File where the photo should go
-            File photoFile = null;
-            try {
-                photoFile = createImageFile();
-            } catch (IOException ex) {
-                // Error occurred while creating the File
-            }
-            // Continue only if the File was successfully created
-            if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(getContext(),
-                        "com.alphabgammainc.nestfinder.fileprovider",
-                        photoFile);
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
-            }
-        }
-    }
-
-    private void galleryAddPic() {
-        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        File f = new File(mCurrentPhotoPath);
-        Uri contentUri = Uri.fromFile(f);
-        mediaScanIntent.setData(contentUri);
-        mActivity.sendBroadcast(mediaScanIntent);
-    }
     @Override
     public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.upload:
+                LatLong latlon = new LatLong(((AdPostingManager)mActivity).getAddress());
+                latlon.createAddress();
+                try {
+                    ProgressBarManager progress = new ProgressBarManager(mActivity, "Uploading Ad...");
+                    progress.ShowProgressDialog();
+                    ((AdPostingManager)mActivity).setProgressBar(progress);
+                    ((AdPostingManager)mActivity).setImages(mImage);
+
+                    ((AdPostingManager)mActivity).getlocation().setmAddress(((AdPostingManager)mActivity).getAddress());
+                    latlon.execute((ConversionCallback) mActivity);
+
+
+
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+
+                break;
+        }
 
     }
     @Override
@@ -228,4 +210,5 @@ public class AdPostingPageFour extends Fragment implements Pages,View.OnClickLis
             e.printStackTrace();
         }
     }
+
 }

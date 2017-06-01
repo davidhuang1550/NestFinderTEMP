@@ -1,6 +1,7 @@
 package com.alphabgammainc.nestfinder.FrontPage;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
@@ -17,9 +18,11 @@ import android.widget.TextView;
 
 import com.alphabgammainc.nestfinder.Classes.Locations;
 import com.alphabgammainc.nestfinder.DetailsPage.DetailsPage;
+import com.alphabgammainc.nestfinder.Landlord.AdPostingManager;
 import com.alphabgammainc.nestfinder.MapsActivity;
 import com.alphabgammainc.nestfinder.R;
 import com.alphabgammainc.nestfinder.Utilities.ImageManager;
+import com.google.android.gms.maps.GoogleMap;
 
 import java.util.ArrayList;
 
@@ -38,7 +41,8 @@ public class FrontPageAdapter  extends RecyclerView.Adapter<FrontPageAdapter.Vie
      * @param activity
      * @param locationses
      */
-    public FrontPageAdapter(Activity activity, ArrayList<Locations> locationses, ManageMap callback, RecyclerView recyclerView ){
+    public FrontPageAdapter(Activity activity, ArrayList<Locations> locationses, ManageMap callback,
+                            RecyclerView recyclerView){
         this.mActivity = activity;
         this.locationses =locationses;
         this.callback = callback;
@@ -61,7 +65,7 @@ public class FrontPageAdapter  extends RecyclerView.Adapter<FrontPageAdapter.Vie
 
         ImageManager.downloadImage(mActivity,holder.image, locationses.get(position).getRentImage().get(0));
         holder.address.setText(this.locationses.get(position).getAddress());
-        holder.price.setText(Double.toString((this.locationses.get(position).getPrice())));
+        holder.price.setText("$"+Double.toString((this.locationses.get(position).getPrice())));
         holder.details.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,19 +114,12 @@ public class FrontPageAdapter  extends RecyclerView.Adapter<FrontPageAdapter.Vie
                 switch(item.getTitle().toString()){
                     case "Details":
 
-
-
-                        // create the fragment and pass in the locations object.
-                        DetailsPage detailsPage = new DetailsPage();
                         Bundle bundle = new Bundle();
                         bundle.putSerializable("location",locationses.get(position));
 
-                        detailsPage.setArguments(bundle);
-
-                        android.support.v4.app.FragmentTransaction ft = ((MapsActivity)mActivity).getSupportFragmentManager().beginTransaction();
-
-                        ft.setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit);
-                        ft.add(R.id.content_frame, (android.support.v4.app.Fragment) detailsPage,"details").commit();
+                        Intent myIntent = new Intent(mActivity, DetailsPage.class);
+                        myIntent.putExtra("bundle", bundle);
+                        mActivity.startActivityForResult(myIntent, 2);
 
                         break;
 
