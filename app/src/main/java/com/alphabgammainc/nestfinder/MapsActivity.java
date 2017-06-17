@@ -45,9 +45,8 @@ public class MapsActivity extends AppCompatActivity implements ImageCallBack{
         this.locationses = locationses;
         if(fragmentManager == null)fragmentManager = getFragmentManager();
 
-
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.content_frame, (android.support.v4.app.Fragment) new FrontPage(),"fragment").commit();
+        FragmentManager manager = getFragmentManager();
+        manager.beginTransaction().replace(R.id.content_frame, new FrontPage()).commit();
 
     }
 

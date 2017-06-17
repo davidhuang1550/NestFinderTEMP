@@ -12,6 +12,8 @@ import android.widget.ListView;
 import com.alphabgammainc.nestfinder.R;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by davidhuang on 2017-05-20.
@@ -43,5 +45,10 @@ public class PageTwoDetails extends Fragment implements DetailsPageInterface{
 
 
         return mView;
+    }
+
+    @Override
+    public void setPlaces(List<HashMap<String, String>> nearbyPlacesList) {
+
     }
 }
