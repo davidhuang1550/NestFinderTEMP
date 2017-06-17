@@ -42,6 +42,7 @@ public class DetailsPage extends AppCompatActivity {
     private ViewPager viewPager;
     private PagerAdapter mPagerAdapter;
     private ArrayList<DetailsPageInterface> pages;
+    private Locations locations;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,7 +59,7 @@ public class DetailsPage extends AppCompatActivity {
 
         Bundle bundle = getIntent().getExtras();
         // use this to populate details later.
-        Locations locations = (Locations) bundle.getBundle("bundle").getSerializable("location");
+        locations = (Locations) bundle.getBundle("bundle").getSerializable("location");
 
         initPages();
 
@@ -66,6 +67,10 @@ public class DetailsPage extends AppCompatActivity {
         mPagerAdapter = new ScreenPagerAdapter(getSupportFragmentManager(), pages);
         viewPager.setAdapter(mPagerAdapter);
 
+    }
+
+    public Locations getLocations(){
+        return locations;
     }
 
     public void initPages(){

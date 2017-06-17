@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/one_sided_border_editfield"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/detials_layout_container"
+        android:paddingLeft="@dimen/detials_layout_container"
+        android:paddingTop="@dimen/detials_layout_container">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingTop="5dp"
+            android:id="@+id/ad_title"
+            android:text="Welcome to Davids Place!"
+            android:textSize="@dimen/details_size" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/location_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/one_sided_border_editfield"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/detials_layout_container"
+        android:paddingLeft="@dimen/detials_layout_container"
+        android:paddingTop="@dimen/detials_layout_container">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/details_image_width"
+                android:layout_height="@dimen/details_image_height"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/home" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="20dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Location"
+                    android:textColor="@color/darkgray"
+                    android:textSize="@dimen/details_header_size" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="8dp"
+                    android:text="27 bridport"
+                    android:id="@+id/ad_location"
+                    android:textSize="@dimen/details_size" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/one_sided_border_editfield"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/detials_layout_container"
+        android:paddingLeft="@dimen/detials_layout_container"
+        android:paddingTop="@dimen/detials_layout_container">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/details_image_width"
+                android:layout_height="@dimen/details_image_height"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/coin" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/detials_layout_container">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Price"
+                    android:textColor="@color/darkgray"
+                    android:textSize="@dimen/details_header_size" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingTop="5dp"
+                    android:id="@+id/ad_price"
+                    android:text="$200/week"
+                    android:textSize="@dimen/details_size" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/one_sided_border_editfield"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/detials_layout_container"
+        android:paddingLeft="@dimen/detials_layout_container"
+        android:paddingTop="@dimen/detials_layout_container">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Additional Information"
+            android:textColor="@color/darkgray"
+            android:textSize="@dimen/details_header_size" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingTop="5dp"
+            android:id="@+id/additional_info"
+            android:text="This is a great place, with multiple bedrooms and quite a few bathrooms."
+            android:textSize="@dimen/details_size" />
+
+    </LinearLayout>
+</LinearLayout>

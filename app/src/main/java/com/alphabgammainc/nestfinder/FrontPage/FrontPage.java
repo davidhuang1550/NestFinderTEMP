@@ -4,21 +4,14 @@ import android.Manifest;
 import android.app.Activity;
 
 import android.app.Fragment;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationManager;
-import android.os.Build;
+
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.widget.NestedScrollView;
+
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -27,7 +20,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.alphabgammainc.nestfinder.Classes.Locations;
 import com.alphabgammainc.nestfinder.MapsActivity;
@@ -36,7 +28,6 @@ import com.alphabgammainc.nestfinder.Utilities.FabManager.FabManager;
 import com.alphabgammainc.nestfinder.Utilities.PermissionsManager;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
@@ -53,6 +44,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -157,7 +150,6 @@ public class FrontPage extends Fragment implements OnMapReadyCallback, ManageMap
         FloatingActionButton generalTooling = (FloatingActionButton) mView.findViewById(R.id.generalTool);
         FloatingActionButton createListing = (FloatingActionButton) mView.findViewById(R.id.createListing);
         FloatingActionButton centerLocation = (FloatingActionButton) mView.findViewById(R.id.centerLocation);
-
 
         fabManager = FabManager.getInstance(generalTooling, createListing, centerLocation, mActivity); // calling get instance automically shows the fab
         fabManager.setListeners();

@@ -41,6 +41,7 @@
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:id="@+id/coordinate"
         >
 
 
@@ -82,11 +83,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/fab_margin"
-                app:layout_anchor="@id/fab_invisible_main"
+                app:layout_anchor="@id/app_bar"
                 app:useCompatPadding="true"
                 app:fabSize="normal"
                 app:elevation="6dp"
-                app:layout_anchorGravity="top"
+                app:layout_anchorGravity="bottom|end"
                 app:srcCompat="@drawable/create_ad_next_button" />
 
             <android.support.design.widget.FloatingActionButton
@@ -104,11 +105,12 @@
                 android:id="@+id/centerLocation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_anchor="@id/fab_invisible"
+                app:layout_anchor="@id/app_bar"
                 app:useCompatPadding="true"
                 app:fabSize="mini"
-                app:layout_anchorGravity="center|end"
+                app:layout_anchorGravity="bottom|end"
                 android:layout_marginRight="16dp"
+
                 app:srcCompat="@android:drawable/ic_dialog_email" />
 
 
