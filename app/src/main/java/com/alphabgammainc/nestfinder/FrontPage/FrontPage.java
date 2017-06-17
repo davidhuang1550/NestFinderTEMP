@@ -1,16 +1,25 @@
 package com.alphabgammainc.nestfinder.FrontPage;
 
 import android.Manifest;
+import android.animation.ValueAnimator;
 import android.app.Activity;
 
 import android.app.Fragment;
 
+import android.content.DialogInterface;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.NestedScrollView;
 
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
@@ -20,6 +29,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
+import android.widget.Toast;
 
 import com.alphabgammainc.nestfinder.Classes.Locations;
 import com.alphabgammainc.nestfinder.MapsActivity;
@@ -69,9 +80,11 @@ public class FrontPage extends Fragment implements OnMapReadyCallback, ManageMap
     private LinearLayoutManager layoutManager;
     private SwipeRefreshLayout swipeRefreshLayout;
     private FabManager fabManager;
+    private AppBarLayout appBarLayout;
     // Temporary until we actually start pulling data
     private AppBarLayout mAppBarLayout;
     private GoogleApiClient mGoogleApiClient;
+    private NestedScrollView nestedscrollview;
     private Location mLastLocation;
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     LocationManager mLocationManager;
@@ -132,6 +145,8 @@ public class FrontPage extends Fragment implements OnMapReadyCallback, ManageMap
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.front_page, container, false);
+        appBarLayout = (AppBarLayout)mView.findViewById(R.id.app_bar);
+        nestedscrollview = (NestedScrollView)mView.findViewById(R.id.nestedscrollview);
 
         MapView mMapView = (MapView) mView.findViewById(R.id.map);
 
@@ -257,6 +272,27 @@ public class FrontPage extends Fragment implements OnMapReadyCallback, ManageMap
      */
     @Override
     public void setMarkerFocusCallback(Locations location) {
+        CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) appBarLayout.getLayoutParams();
+        final AppBarLayout.Behavior behavior = (AppBarLayout.Behavior) params.getBehavior();
+        if (behavior != null) {
+            ValueAnimator valueAnimator = ValueAnimator.ofInt();
+            valueAnimator.setInterpolator(new DecelerateInterpolator());
+            valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    behavior.setTopAndBottomOffset((Integer) animation.getAnimatedValue());
+                    appBarLayout.requestLayout();
+                }
+            });
+            valueAnimator.setIntValues(0, 0);
+            valueAnimator.setDuration(0);
+            valueAnimator.start();
+        }
+
+        Collections.swap(locations, 0, locations.indexOf(location));
+        adapter.notifyDataSetChanged();
+        nestedscrollview.scrollTo(0,0);
+
         Marker marker = mapManager.getMapmarker(location);
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(marker.getPosition(),14));
         marker.showInfoWindow();
