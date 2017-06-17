@@ -83,6 +83,8 @@ public class FabManager implements View.OnClickListener {
                 break;
             case R.id.centerLocation:
                 // same thing here
+
+
                 break;
 
         }

@@ -27,12 +27,14 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
+
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
 
 /**
  * Created by davidhuang on 2017-05-20.
@@ -121,11 +123,13 @@ public class PageOneDetails extends Fragment implements OnMapReadyCallback, Deta
             MapStyleOptions style =MapStyleOptions.loadRawResourceStyle(this.getContext(),R.raw.mapstyle);
             googleMap.setMapStyle(style);
         }
+
         googleMap.addMarker(new MarkerOptions()
                 .position(new LatLng(locations.getLat(), locations.getLon()))
                 .title(locations.getAddress()));
 
         map = googleMap;
+
         googleMap.animateCamera(cameraUpdate);
     }
 
