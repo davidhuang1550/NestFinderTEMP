@@ -47,8 +47,7 @@
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps" android:screenOrientation="userPortrait">
-
-            <intent-filter>
+            <intent-filter >
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -56,7 +55,8 @@
         </activity>
         <activity android:label="@string/ad_posting_name" android:name=".Landlord.AdPostingManager"/>
         <activity android:label="@string/ad_details_maanger" android:name=".DetailsPage.DetailsPage"/>
-
+        <activity android:label="@string/account_profile" android:name=".User.AccountProfile">
+        </activity>
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.alphabgammainc.nestfinder.fileprovider"
