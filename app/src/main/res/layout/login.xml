@@ -71,7 +71,7 @@
         android:textColor="@color/white"
         android:background="@drawable/login_button"
         android:layout_marginTop="20dp"
-        android:backgroundTint="#1085bc"
+        android:backgroundTint="@color/colorPrimary"
         android:layout_below="@+id/remember_me"
         android:layout_alignStart="@+id/userPassword"
         android:layout_alignEnd="@+id/userPassword" />
