@@ -57,6 +57,11 @@
                 android:layout_height="match_parent"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
+                <ImageView
+                    android:id="@+id/transparent_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
                 <com.google.android.gms.maps.MapView
                     android:id="@+id/map"
                     android:layout_width="wrap_content"
@@ -105,10 +110,10 @@
                 android:id="@+id/centerLocation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_anchor="@id/app_bar"
+                app:layout_anchor="@id/fab_invisible"
                 app:useCompatPadding="true"
                 app:fabSize="mini"
-                app:layout_anchorGravity="bottom|end"
+                app:layout_anchorGravity="center|right"
                 android:layout_marginRight="16dp"
 
                 app:srcCompat="@android:drawable/ic_dialog_email" />

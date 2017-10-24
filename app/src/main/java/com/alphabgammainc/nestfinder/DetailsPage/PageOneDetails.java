@@ -1,11 +1,15 @@
 package com.alphabgammainc.nestfinder.DetailsPage;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -15,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.alphabgammainc.nestfinder.Classes.CustomMapView;
 import com.alphabgammainc.nestfinder.Classes.Locations;
 import com.alphabgammainc.nestfinder.GoogleService.Caching.PlacesCachingManager;
 import com.alphabgammainc.nestfinder.R;
@@ -48,6 +53,8 @@ public class PageOneDetails extends Fragment implements OnMapReadyCallback, Deta
     private GoogleMap map;
     private Locations locations;
     private String currentPlace;
+    private ScrollView sv;
+    private CustomMapView mMapView;
 
     /**
      * this is going to be  dynamic later
@@ -69,7 +76,7 @@ public class PageOneDetails extends Fragment implements OnMapReadyCallback, Deta
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.details_page_one, container ,false);
         nearbyPlacesList = new HashMap<>();
-        MapView mMapView = (MapView) mView.findViewById(R.id.map);
+        mMapView = (CustomMapView) mView.findViewById(R.id.map);
 
         mMapView.onCreate(savedInstanceState);
         locations = ((DetailsPage)mActivity).getLocations();
@@ -98,6 +105,8 @@ public class PageOneDetails extends Fragment implements OnMapReadyCallback, Deta
         ad_price.setText(locations.getPrice() + "/month");
         additional_info.setText(locations.getDescription());
 
+        sv = (ScrollView) mView.findViewById(R.id.scrollview);
+
 
         mMapView.onResume(); // needed to get the map to display immediately
 
@@ -109,7 +118,6 @@ public class PageOneDetails extends Fragment implements OnMapReadyCallback, Deta
 
 
         mMapView.getMapAsync(this);
-
 
 
         return mView;
@@ -129,7 +137,27 @@ public class PageOneDetails extends Fragment implements OnMapReadyCallback, Deta
                 .title(locations.getAddress()));
 
         map = googleMap;
+        mMapView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent ev) {
+                int action = ev.getAction();
+                switch (action) {
+                    case MotionEvent.ACTION_DOWN:
+                        // Disallow ScrollView to intercept touch events.
+                        sv.requestDisallowInterceptTouchEvent(true);
+                        break;
 
+                    case MotionEvent.ACTION_UP:
+                        // Allow ScrollView to intercept touch events.
+                        sv.requestDisallowInterceptTouchEvent(false);
+                        break;
+                }
+
+                // Handle MapView's touch events.
+                sv.onTouchEvent(ev);
+                return true;
+            }
+        });
         googleMap.animateCamera(cameraUpdate);
     }
 
@@ -208,3 +236,4 @@ public class PageOneDetails extends Fragment implements OnMapReadyCallback, Deta
     }
 
 }
+

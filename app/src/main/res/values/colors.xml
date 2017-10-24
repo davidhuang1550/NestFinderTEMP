@@ -14,4 +14,5 @@
     <color name="lightpurpleOpac">#19B5FF</color>
     <color name="darkgray">#999999</color>
     <color name="darkblue">#0A17B2</color>
+    <color name="transparent">#80000000</color>
 </resources>
